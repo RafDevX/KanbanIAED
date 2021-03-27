@@ -49,6 +49,11 @@
 #define ERR_TOO_MANY_TASKS "too many tasks"
 #define ERR_DUPLICATE_DESC "duplicate description"
 
+/*** Default Activities ***/
+#define DEFAULT_ACTV_TODO "TO DO"
+#define DEFAULT_ACTV_IPRG "IN PROGRESS"
+#define DEFAULT_ACTV_DONE "DONE"
+
 /************************
  ***** Custom Types *****
  ************************/

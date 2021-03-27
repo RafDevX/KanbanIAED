@@ -10,8 +10,9 @@
 int main()
 {
 
-	Activity todo = {"TO DO"}, inprogress = {"IN PROGRESS"}, done = {"DONE"};
-
+	Activity todo = {DEFAULT_ACTV_TODO},
+			 inprogress = {DEFAULT_ACTV_IPRG},
+			 done = {DEFAULT_ACTV_DONE};
 	State state;
 	char cmd;
 
