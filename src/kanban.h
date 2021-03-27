@@ -50,6 +50,7 @@
 #define ERR_DUPLICATE_DESC "duplicate description"
 
 /*** Default Activities ***/
+
 #define DEFAULT_ACTV_TODO "TO DO"
 #define DEFAULT_ACTV_IPRG "IN PROGRESS"
 #define DEFAULT_ACTV_DONE "DONE"
@@ -91,7 +92,6 @@ typedef struct {
 
 /* Auxiliary */
 
-void discardSeparator(); /* FIXME: multiple (or 0 for invalid cmd) spaces are allowed as separators!!! */
 int isOkChar(char c);
 void readInt(int *i);
 void readString(char s[], int maxsize);

@@ -14,7 +14,6 @@ void task(State *state)
 	Task new;
 	Activity actv;
 	readInt(&duration);
-	discardSeparator();
 	readString(desc, MAX_TASK_DESC_SIZE);
 
 	if (duration <= 0) {

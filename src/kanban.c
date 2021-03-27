@@ -25,7 +25,6 @@ int main()
 	state.time = 0;
 
 	while ((cmd = getchar()) != QUIT_CMD) {
-		discardSeparator();
 		switch (cmd) {
 		case TASK_CMD:
 			task(&state);

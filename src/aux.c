@@ -7,12 +7,6 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
-/* Grab and discard command argument separator */
-void discardSeparator()
-{
-	getchar(); /* Possibly error if char is not a space */
-}
-
 int isOkChar(char c)
 {
 	return (c != EOF) && c != '\n'; /* Possibly add more restrictions with ctype.h funcs */
@@ -23,12 +17,16 @@ void readInt(int *i)
 	scanf("%d", i);
 }
 
+/* ....strips left */
 void readString(char s[], int maxsize)
 {
-	int i = 0;
+	int i = 0, stripping = 1;
 	char c;
 	while (i < maxsize - 2 && isOkChar(c = getchar())) {
-		s[i++] = c;
+		if (!isspace(c) || !stripping) {
+			stripping = 0;
+			s[i++] = c;
+		}
 	}
 	s[i] = '\0';
 }
