@@ -4,12 +4,6 @@
  *	Description: Main project file.
 */
 
-/*** Include standard libraries ***/
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 /*** Include project header file ***/
 #include "kanban.h"
 
@@ -23,10 +17,14 @@ int main()
 
 	state.activities[0] = todo;
 	state.activities[1] = inprogress;
-	state.activities[2] = done; /* cannot just assign arrays! passear variavel size ao lado */
+	state.activities[2] = done;
 	state.activitiesSize = 3;
+	state.usersSize = 0;
+	state.tasksSize = 0;
+	state.time = 0;
 
 	while ((cmd = getchar()) != QUIT_CMD) {
+		discardSeparator();
 		switch (cmd) {
 		case TASK_CMD:
 			task(&state);
