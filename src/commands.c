@@ -10,41 +10,40 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*** Include project header files ***/
-#include "commands.h"
-/*#include <constants.h> uncomment when needed*/
+/*** Include project header file ***/
+#include "kanban.h"
 
-void task(State state)
+void task(State *state)
 {
 	printf("Task!");
 }
 
-void list(State state)
+void list(State *state)
 {
 	printf("List!");
 }
 
-void step(State state)
+void step(State *state)
 {
 	printf("Step!");
 }
 
-void user(State state)
+void user(State *state)
 {
 	printf("User!");
 }
 
-void move(State state)
+void move(State *state)
 {
 	printf("Move!");
 }
 
-void tina(State state)
+void tina(State *state)
 {
 	printf("Tina!");
 }
 
-void actv(State state)
+void actv(State *state)
 {
 	printf("Actv!");
 }
