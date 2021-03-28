@@ -98,13 +98,13 @@ typedef struct {
 /* Auxiliary */
 
 int isOkChar(char c);
+void quickSort(void *base, unsigned int size, int (*cmpfunc)(void *, void *));
 void readInt(int *i);
 void readString(char s[], int maxsize);
 void getActivity(Activity *actv, Activity list[], int listSize, char desc[]);
 void getTask(Task *task, Task list[], int listSize, unsigned int id);
 void printTask(Task task);
-
-/* Note: Cannot have a readUnsignedInt as there will be tests like duration = -10 */
+int compareTaskDescs(void *a, void *b);
 
 /* Commands */
 

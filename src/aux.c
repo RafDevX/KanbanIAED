@@ -12,6 +12,11 @@ int isOkChar(char c)
 	return c != EOF && c != '\n'; /* Possibly add more restrictions with ctype.h funcs */
 }
 
+void quickSort(void *base, unsigned int size, int (*cmpfunc)(void *, void *))
+{
+	/* TODO: this */
+}
+
 void readInt(int *i)
 {
 	scanf("%d", i);
@@ -56,4 +61,9 @@ void getTask(Task *task, Task list[], int listSize, unsigned int id) /* FIXME: d
 void printTask(Task task)
 {
 	printf("%u %s #%u %s\n", task.id, task.activity.desc, task.duration, task.desc);
+}
+
+int compareTaskDescs(void *a, void *b)
+{
+	return ((*(Task *)a).desc - (*(Task *)b).desc);
 }

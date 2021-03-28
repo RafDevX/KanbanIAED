@@ -9,10 +9,10 @@
 
 void task(State *state)
 {
-	int duration, id;
-	unsigned int i;
+	int duration;
+	unsigned int i, size;
 	char desc[MAX_TASK_DESC_SIZE];
-	Task new;
+	Task *new;
 	Activity actv;
 	readInt(&duration);
 	readString(desc, MAX_TASK_DESC_SIZE);
@@ -32,17 +32,16 @@ void task(State *state)
 		}
 	}
 
-	id = state->tasksSize + 1;
-	state->tasksSize++;
-	new = state->tasks[id - 1];
+	size = state->tasksSize++;
+	new = &state->tasks[size];
 	getActivity(&actv, state->activities, state->activitiesSize, DEFAULT_ACTV_TODO);
-	new.activity = actv;
-	strcpy(new.desc, desc);
-	new.duration = duration;
-	new.id = id;
-	new.start = 0;
+	new->activity = actv;
+	strcpy(new->desc, desc);
+	new->duration = duration;
+	new->id = size + 1;
+	new->start = 0;
 
-	printf("task %d\n", new.id);
+	printf("task %d\n", size + 1);
 }
 
 void list(State *state)
@@ -51,7 +50,8 @@ void list(State *state)
 	unsigned int i, n = 0;
 	Task task;
 	char c;
-	while (isOkChar(c = getchar())) {
+	do {
+		c = getchar();
 		if (isdigit(c)) {
 			hadArgs = 1;
 			n = n * 10 + (c - '0');
@@ -65,11 +65,10 @@ void list(State *state)
 			printTask(task);
 			n = 0;
 		}
-	}
+	} while (isOkChar(c));
 	if (!hadArgs) {
-		/* quick sort */
-		for (i = 1; i <= state->tasksSize; i++) {
-			printf("DESC: %s\n", state->tasks[i].desc);
+		quickSort(state->tasks, state->tasksSize, compareTaskDescs);
+		for (i = 0; i < state->tasksSize; i++) {
 			printTask(state->tasks[i]);
 		}
 	}
