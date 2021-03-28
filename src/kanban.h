@@ -14,6 +14,10 @@
  ***** Project-Wide Constants *****
  **********************************/
 
+/*** General configuration constants ***/
+
+#define INITIAL_TIME 0
+
 /*** Type-related constants ***/
 
 #define MAX_ACTIVITY_SIZE 20
@@ -48,6 +52,7 @@
 #define ERR_INVALID_DURATION "invalid duration"
 #define ERR_TOO_MANY_TASKS "too many tasks"
 #define ERR_DUPLICATE_DESC "duplicate description"
+#define ERR_NO_SUCH_TASK "no such task"
 
 /*** Default Activities ***/
 
@@ -72,8 +77,8 @@ typedef struct {
 	char desc[MAX_TASK_DESC_SIZE];
 	User user;
 	Activity activity;
-	unsigned int estDuration;
-	unsigned int startTime;
+	unsigned int duration;
+	unsigned int start;
 } Task;
 
 typedef struct {
@@ -96,7 +101,8 @@ int isOkChar(char c);
 void readInt(int *i);
 void readString(char s[], int maxsize);
 void getActivity(Activity *actv, Activity list[], int listSize, char desc[]);
-int compareStringToActivity(const void *s, const void *a);
+void getTask(Task *task, Task list[], int listSize, unsigned int id);
+void printTask(Task task);
 
 /* Note: Cannot have a readUnsignedInt as there will be tests like duration = -10 */
 

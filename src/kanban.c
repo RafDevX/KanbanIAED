@@ -22,7 +22,7 @@ int main()
 	state.activitiesSize = 3;
 	state.usersSize = 0;
 	state.tasksSize = 0;
-	state.time = 0;
+	state.time = INITIAL_TIME;
 
 	while ((cmd = getchar()) != QUIT_CMD) {
 		switch (cmd) {

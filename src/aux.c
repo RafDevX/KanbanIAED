@@ -9,7 +9,7 @@
 
 int isOkChar(char c)
 {
-	return (c != EOF) && c != '\n'; /* Possibly add more restrictions with ctype.h funcs */
+	return c != EOF && c != '\n'; /* Possibly add more restrictions with ctype.h funcs */
 }
 
 void readInt(int *i)
@@ -40,4 +40,20 @@ void getActivity(Activity *actv, Activity list[], int listSize, char *desc)
 			break;
 		}
 	}
+}
+
+void getTask(Task *task, Task list[], int listSize, unsigned int id) /* FIXME: dry */
+{
+	int i;
+	for (i = 0; i < listSize; i++) {
+		if (list[i].id == id) {
+			*task = list[i];
+			break;
+		}
+	}
+}
+
+void printTask(Task task)
+{
+	printf("%u %s #%u %s\n", task.id, task.activity.desc, task.duration, task.desc);
 }
