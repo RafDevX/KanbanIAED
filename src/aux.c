@@ -93,7 +93,7 @@ int compareTasksByStartThenDesc(Task a, Task b)
 
 int isOkChar(char c)
 {
-	return c != EOF && c != '\n'; /* Possibly add more restrictions with ctype.h funcs */
+	return c != EOF && c != '\n' && c != '\0';
 }
 
 void discardRemaining()

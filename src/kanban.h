@@ -59,6 +59,9 @@
 #define ERR_TASK_ALREADY_STARTED "task already started\n"
 #define ERR_NO_SUCH_USER "no such user\n"
 #define ERR_NO_SUCH_ACTIVITY "no such activity\n"
+#define ERR_DUPLICATE_ACTIVITY "duplicate activity\n"
+#define ERR_INVALID_DESCRIPTION "invalid description\n"
+#define ERR_TOO_MANY_ACTIVITIES "too many activities\n"
 
 /*** Default Activities ***/
 

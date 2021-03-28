@@ -90,7 +90,7 @@ void user(State *state)
 	char username[MAX_USER_SIZE];
 	User *user;
 	readWord(username, MAX_USER_SIZE);
-	if (strcmp(username, "") != 0) {
+	if (username[0] != '\0') {
 		user = getUser(state->users, state->usersSize, username);
 		if (user != NULL) {
 			printf(ERR_USER_ALREADY_EXISTS);
@@ -181,5 +181,31 @@ void tina(State *state)
 
 void actv(State *state)
 {
-	printf("Actv! %d\n", state->activitiesSize);
+	char activity[MAX_ACTIVITY_SIZE] = "";
+	unsigned int i = 0;
+	Activity *actv;
+	readWord(activity, MAX_ACTIVITY_SIZE);
+	if (activity[0] != '\0') {
+		actv = getActivity(state->activities, state->activitiesSize, activity);
+		if (actv != NULL) {
+			printf(ERR_DUPLICATE_ACTIVITY);
+			return;
+		}
+		while (isOkChar(activity[i])) {
+			if (islower(activity[i++])) {
+				printf(ERR_INVALID_DESCRIPTION);
+				return;
+			}
+		}
+		if (state->activitiesSize + 1 >= MAX_ACTIVITIES) {
+			printf(ERR_TOO_MANY_ACTIVITIES);
+			return;
+		}
+
+		strcpy(state->activities[state->activitiesSize++].desc, activity);
+	} else {
+		for (i = 0; i < state->activitiesSize; i++) {
+			printf("%s\n", state->activities[i].desc);
+		}
+	}
 }
