@@ -7,7 +7,7 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
-void task(State *state)
+void cmdTask(State *state)
 {
 	int duration = -1;
 	unsigned int i, size;
@@ -44,7 +44,7 @@ void task(State *state)
 	printf("task %d\n", size + 1);
 }
 
-void list(State *state)
+void cmdList(State *state)
 {
 	int hadArgs = 0;
 	unsigned int i, n = 0;
@@ -73,7 +73,7 @@ void list(State *state)
 	}
 }
 
-void step(State *state)
+void cmdStep(State *state)
 {
 	int duracao = -1;
 	readInt(&duracao);
@@ -84,7 +84,7 @@ void step(State *state)
 	printf("%u\n", state->time += duracao);
 }
 
-void user(State *state)
+void cmdUser(State *state)
 {
 	unsigned int i = 0;
 	char username[MAX_USER_SIZE];
@@ -109,7 +109,7 @@ void user(State *state)
 	}
 }
 
-void move(State *state)
+void cmdMove(State *state)
 {
 	int id, spent, slack;
 	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
@@ -153,7 +153,7 @@ void move(State *state)
 	}
 }
 
-void tina(State *state)
+void cmdTina(State *state)
 {
 	unsigned int i, size = 0;
 	char activity[MAX_ACTIVITY_SIZE];
@@ -179,7 +179,7 @@ void tina(State *state)
 	}
 }
 
-void actv(State *state)
+void cmdActv(State *state)
 {
 	char activity[MAX_ACTIVITY_SIZE] = "";
 	unsigned int i = 0;

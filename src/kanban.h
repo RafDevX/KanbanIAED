@@ -124,10 +124,10 @@ void printTask(Task task);
 
 /* Commands */
 
-void task(State *state);
-void list(State *state);
-void step(State *state);
-void user(State *state);
-void move(State *state);
-void tina(State *state); /* Tasks IN Activity */
-void actv(State *state); /* Activities */
+void cmdTask(State *state);
+void cmdList(State *state);
+void cmdStep(State *state);
+void cmdUser(State *state);
+void cmdMove(State *state);
+void cmdTina(State *state); /* Tasks IN Activity */
+void cmdActv(State *state); /* Activities */

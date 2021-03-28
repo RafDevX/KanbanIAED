@@ -27,25 +27,25 @@ int main()
 	while ((cmd = getchar()) != QUIT_CMD) {
 		switch (cmd) {
 		case TASK_CMD:
-			task(&state);
+			cmdTask(&state);
 			break;
 		case LIST_CMD:
-			list(&state);
+			cmdList(&state);
 			break;
 		case STEP_CMD:
-			step(&state);
+			cmdStep(&state);
 			break;
 		case USER_CMD:
-			user(&state);
+			cmdUser(&state);
 			break;
 		case MOVE_CMD:
-			move(&state);
+			cmdMove(&state);
 			break;
 		case TINA_CMD: /* Tasks IN Activity */
-			tina(&state);
+			cmdTina(&state);
 			break;
 		case ACTV_CMD: /* Activity */
-			actv(&state);
+			cmdActv(&state);
 			break;
 		default: /* Unrecognized command */
 			return -1;
