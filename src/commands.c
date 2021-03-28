@@ -76,7 +76,13 @@ void list(State *state)
 
 void step(State *state)
 {
-	printf("Step! %d\n", state->time);
+	int duracao;
+	readInt(&duracao);
+	discardRemaining();
+	if (duracao < 0) {
+		printf(ERR_INVALID_TIME);
+	}
+	printf("%u\n", state->time += duracao);
 }
 
 void user(State *state)

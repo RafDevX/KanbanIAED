@@ -17,6 +17,14 @@ void quickSort(void *base, unsigned int size, int (*cmpfunc)(void *, void *))
 	/* TODO: this */
 }
 
+void discardRemaining()
+{
+	char c;
+	while (isOkChar(c = getchar())) {
+		/* do nothing */
+	};
+}
+
 void readInt(int *i)
 {
 	scanf("%d", i);

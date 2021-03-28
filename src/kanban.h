@@ -49,10 +49,11 @@
 
 /*** User-Oriented Messages ***/
 
-#define ERR_INVALID_DURATION "invalid duration"
-#define ERR_TOO_MANY_TASKS "too many tasks"
-#define ERR_DUPLICATE_DESC "duplicate description"
-#define ERR_NO_SUCH_TASK "no such task"
+#define ERR_INVALID_DURATION "invalid duration\n"
+#define ERR_TOO_MANY_TASKS "too many tasks\n"
+#define ERR_DUPLICATE_DESC "duplicate description\n"
+#define ERR_NO_SUCH_TASK "no such task\n"
+#define ERR_INVALID_TIME "invalid time\n"
 
 /*** Default Activities ***/
 
@@ -99,6 +100,7 @@ typedef struct {
 
 int isOkChar(char c);
 void quickSort(void *base, unsigned int size, int (*cmpfunc)(void *, void *));
+void discardRemaining(void);
 void readInt(int *i);
 void readString(char s[], int maxsize);
 void getActivity(Activity *actv, Activity list[], int listSize, char desc[]);
