@@ -56,9 +56,9 @@ void list(State *state)
 			hadArgs = 1;
 			n = n * 10 + (c - '0');
 		} else if (n != 0) {
-			task.id = -1;
+			task.id = 0;
 			getTask(&task, state->tasks, state->tasksSize, n);
-			if ((int)task.id == -1) {
+			if ((int)task.id == 0) {
 				printf(ERR_NO_SUCH_TASK);
 				return;
 			}
@@ -87,27 +87,23 @@ void step(State *state)
 
 void user(State *state)
 {
-	unsigned int i, len = 0;
-	char c, user[MAX_USER_SIZE];
-	while (isOkChar(c = getchar())) {
-		if (!isspace(c)) {
-			user[len++] = c;
-		}
-	}
-	user[len] = '\0';
-	if (strcmp(user, "") != 0) {
-		for (i = 0; i < state->usersSize; i++) {
-			if (strcmp(state->users[i].desc, user) == 0) {
-				printf(ERR_USER_ALREADY_EXISTS);
-				return;
-			}
+	unsigned int i = 0;
+	char username[MAX_USER_SIZE];
+	User user;
+	readWord(username);
+	if (strcmp(username, "") != 0) {
+		strcpy(user.desc, "");
+		getUser(&user, state->users, state->usersSize, username);
+		if (strcmp(user.desc, "") != 0) {
+			printf(ERR_USER_ALREADY_EXISTS);
+			return;
 		}
 		if (state->usersSize + 1 >= MAX_USERS) {
 			printf(ERR_TOO_MANY_USERS);
 			return;
 		}
 
-		strcpy(state->users[state->usersSize++].desc, user);
+		strcpy(state->users[state->usersSize++].desc, username);
 	} else {
 		for (i = 0; i < state->usersSize; i++) {
 			printf("%s\n", state->users[i].desc);
@@ -117,7 +113,48 @@ void user(State *state)
 
 void move(State *state)
 {
-	printf("Move! %d\n", state->time);
+	int id, gasto, slack;
+	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
+	Task task;
+	User user;
+	Activity actv;
+	readInt(&id);
+	readWord(username);
+	readWord(activity);
+
+	task.id = 0;
+	getTask(&task, state->tasks, state->tasksSize, id);
+	if (task.id == 0) {
+		printf(ERR_NO_SUCH_TASK);
+		return;
+	}
+	if (strcmp(activity, DEFAULT_ACTV_TODO) == 0) {
+		printf(ERR_TASK_ALREADY_STARTED);
+		return;
+	}
+
+	strcpy(user.desc, "");
+	getUser(&user, state->users, state->usersSize, username);
+	if (strcmp(user.desc, "") == 0) {
+		printf(ERR_NO_SUCH_USER);
+		return;
+	}
+	strcpy(actv.desc, "");
+	getActivity(&actv, state->activities, state->activitiesSize, activity);
+	if (strcmp(actv.desc, "") == 0) {
+		printf(ERR_NO_SUCH_ACTIVITY);
+		return;
+	}
+
+	task.activity = actv;
+
+	if (strcmp(actv.desc, DEFAULT_ACTV_DONE) == 0) {
+		gasto = state->time - task.start;
+		slack = gasto - task.duration;
+		printf("duration=%d gasto=%d", gasto, slack);
+	} else if (task.start == 0) {
+		task.start = state->time;
+	}
 }
 
 void tina(State *state)

@@ -95,6 +95,21 @@ void readInt(int *i)
 	scanf("%d", i);
 }
 
+void readWord(char w[])
+{
+	int i = 0, inside = 0;
+	char c;
+	while (isOkChar(c = getchar())) {
+		if (!isspace(c)) {
+			w[i++] = c;
+			inside = 1;
+		} else if (inside) {
+			break;
+		}
+	}
+	w[i] = '\0';
+}
+
 /* ....strips left */
 void readString(char s[], int maxsize)
 {
@@ -126,6 +141,17 @@ void getTask(Task *task, Task list[], int listSize, unsigned int id) /* FIXME: d
 	for (i = 0; i < listSize; i++) {
 		if (list[i].id == id) {
 			*task = list[i];
+			break;
+		}
+	}
+}
+
+void getUser(User *user, User list[], int listSize, char desc[])
+{
+	int i;
+	for (i = 0; i < listSize; i++) {
+		if (list[i].desc == desc) {
+			*user = list[i];
 			break;
 		}
 	}

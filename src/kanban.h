@@ -56,6 +56,9 @@
 #define ERR_INVALID_TIME "invalid time\n"
 #define ERR_USER_ALREADY_EXISTS "user already exists\n"
 #define ERR_TOO_MANY_USERS "too many users\n"
+#define ERR_TASK_ALREADY_STARTED "task already started\n"
+#define ERR_NO_SUCH_USER "no such user\n"
+#define ERR_NO_SUCH_ACTIVITY "no such activity\n"
 
 /*** Default Activities ***/
 
@@ -100,15 +103,18 @@ typedef struct {
 
 /* Auxiliary */
 
+/* TODO: try refactor so returns pointers instead of through arg */
 void quickSortTasks(Task arr[], int lo, int hi);
 Task chooseAndPlacePivot(Task arr[], int lo, int hi);
 int partialSort(Task arr[], int lo, int hi, Task pivot);
 int isOkChar(char c);
 void discardRemaining(void);
 void readInt(int *i);
+void readWord(char w[]);
 void readString(char s[], int maxsize);
 void getActivity(Activity *actv, Activity list[], int listSize, char desc[]);
 void getTask(Task *task, Task list[], int listSize, unsigned int id);
+void getUser(User *user, User list[], int listSize, char desc[]);
 void printTask(Task task);
 int compareTaskDescs(void *a, void *b);
 
