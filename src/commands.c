@@ -13,7 +13,7 @@ void task(State *state)
 	unsigned int i, size;
 	char desc[MAX_TASK_DESC_SIZE];
 	Task *new;
-	Activity actv;
+	Activity *actv;
 	readInt(&duration);
 	readString(desc, MAX_TASK_DESC_SIZE);
 
@@ -34,8 +34,8 @@ void task(State *state)
 
 	size = state->tasksSize++;
 	new = &state->tasks[size];
-	getActivity(&actv, state->activities, state->activitiesSize, DEFAULT_ACTV_TODO);
-	new->activity = actv;
+	actv = getActivity(state->activities, state->activitiesSize, DEFAULT_ACTV_TODO);
+	new->activity = *actv;
 	strcpy(new->desc, desc);
 	new->duration = duration;
 	new->id = size + 1;
@@ -48,7 +48,7 @@ void list(State *state)
 {
 	int hadArgs = 0;
 	unsigned int i, n = 0;
-	Task task;
+	Task *task;
 	char c;
 	do {
 		c = getchar();
@@ -56,18 +56,17 @@ void list(State *state)
 			hadArgs = 1;
 			n = n * 10 + (c - '0');
 		} else if (n != 0) {
-			task.id = 0;
-			getTask(&task, state->tasks, state->tasksSize, n);
-			if ((int)task.id == 0) {
+			task = getTask(state->tasks, state->tasksSize, n);
+			if (task == NULL) {
 				printf(ERR_NO_SUCH_TASK);
 				return;
 			}
-			printTask(task);
+			printTask(*task);
 			n = 0;
 		}
 	} while (isOkChar(c));
 	if (!hadArgs) {
-		quickSortTasks(state->tasks, 0, state->tasksSize - 1);
+		quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);
 		for (i = 0; i < state->tasksSize; i++) {
 			printTask(state->tasks[i]);
 		}
@@ -89,12 +88,11 @@ void user(State *state)
 {
 	unsigned int i = 0;
 	char username[MAX_USER_SIZE];
-	User user;
-	readWord(username);
+	User *user;
+	readWord(username, MAX_USER_SIZE);
 	if (strcmp(username, "") != 0) {
-		strcpy(user.desc, "");
-		getUser(&user, state->users, state->usersSize, username);
-		if (strcmp(user.desc, "") != 0) {
+		user = getUser(state->users, state->usersSize, username);
+		if (user != NULL) {
 			printf(ERR_USER_ALREADY_EXISTS);
 			return;
 		}
@@ -113,18 +111,17 @@ void user(State *state)
 
 void move(State *state)
 {
-	int id, gasto, slack;
+	int id, spent, slack;
 	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
-	Task task;
-	User user;
-	Activity actv;
+	Task *task;
+	User *user;
+	Activity *actv;
 	readInt(&id);
-	readWord(username);
-	readWord(activity);
+	readWord(username, MAX_USER_SIZE);
+	readString(activity, MAX_ACTIVITY_SIZE);
 
-	task.id = 0;
-	getTask(&task, state->tasks, state->tasksSize, id);
-	if (task.id == 0) {
+	task = getTask(state->tasks, state->tasksSize, id);
+	if (task == NULL) {
 		printf(ERR_NO_SUCH_TASK);
 		return;
 	}
@@ -133,33 +130,53 @@ void move(State *state)
 		return;
 	}
 
-	strcpy(user.desc, "");
-	getUser(&user, state->users, state->usersSize, username);
-	if (strcmp(user.desc, "") == 0) {
+	user = getUser(state->users, state->usersSize, username);
+	if (user == NULL) {
 		printf(ERR_NO_SUCH_USER);
 		return;
 	}
-	strcpy(actv.desc, "");
-	getActivity(&actv, state->activities, state->activitiesSize, activity);
-	if (strcmp(actv.desc, "") == 0) {
+
+	actv = getActivity(state->activities, state->activitiesSize, activity);
+	if (actv == NULL) {
 		printf(ERR_NO_SUCH_ACTIVITY);
 		return;
 	}
 
-	task.activity = actv;
+	task->activity = *actv;
 
-	if (strcmp(actv.desc, DEFAULT_ACTV_DONE) == 0) {
-		gasto = state->time - task.start;
-		slack = gasto - task.duration;
-		printf("duration=%d gasto=%d", gasto, slack);
-	} else if (task.start == 0) {
-		task.start = state->time;
+	if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
+		spent = state->time - task->start;
+		slack = spent - task->duration;
+		printf("duration=%d slack=%d\n", spent, slack);
+	} else if (task->start == 0) {
+		task->start = state->time;
 	}
 }
 
 void tina(State *state)
 {
-	printf("Tina! %d\n", state->time);
+	unsigned int i, size = 0;
+	char activity[MAX_ACTIVITY_SIZE];
+	Activity *actv;
+	Task tasks[MAX_TASKS];
+	readString(activity, MAX_ACTIVITY_SIZE);
+	actv = getActivity(state->activities, state->activitiesSize, activity);
+	if (actv == NULL) {
+		printf(ERR_NO_SUCH_ACTIVITY);
+		return;
+	}
+
+	for (i = 0; i < state->tasksSize; i++) {
+		if (strcmp(state->tasks[i].activity.desc, actv->desc) == 0) {
+			tasks[size++] = state->tasks[i];
+		}
+	}
+
+	quickSortTasks(tasks, 0, size - 1, compareTasksByStartThenDesc);
+
+	for (i = 0; i < size; i++) {
+		printf("%u %u %s\n", tasks[i].id, tasks[i].start, tasks[i].desc);
+	}
 }
 
 void actv(State *state)

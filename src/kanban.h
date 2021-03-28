@@ -104,19 +104,20 @@ typedef struct {
 /* Auxiliary */
 
 /* TODO: try refactor so returns pointers instead of through arg */
-void quickSortTasks(Task arr[], int lo, int hi);
-Task chooseAndPlacePivot(Task arr[], int lo, int hi);
-int partialSort(Task arr[], int lo, int hi, Task pivot);
+void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task));
+Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task));
+int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task));
+int compareTasksByDesc(Task a, Task b);
+int compareTasksByStartThenDesc(Task a, Task b);
 int isOkChar(char c);
 void discardRemaining(void);
 void readInt(int *i);
-void readWord(char w[]);
+void readWord(char w[], int maxsize);
 void readString(char s[], int maxsize);
-void getActivity(Activity *actv, Activity list[], int listSize, char desc[]);
-void getTask(Task *task, Task list[], int listSize, unsigned int id);
-void getUser(User *user, User list[], int listSize, char desc[]);
+Activity *getActivity(Activity list[], int listSize, char *desc);
+Task *getTask(Task list[], int listSize, unsigned int id);
+User *getUser(User list[], int listSize, char desc[]);
 void printTask(Task task);
-int compareTaskDescs(void *a, void *b);
 
 /* Commands */
 

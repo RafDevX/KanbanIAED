@@ -7,39 +7,39 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
-void quickSortTasks(Task arr[], int lo, int hi)
+void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 {
 	int pi;
 	Task pivot;
 	if (lo < hi) {
-		pivot = chooseAndPlacePivot(arr, lo, hi);
-		pi = partialSort(arr, lo, hi, pivot);
+		pivot = chooseAndPlacePivot(arr, lo, hi, compf);
+		pi = partialSort(arr, lo, hi, pivot, compf);
 
 		arr[hi] = arr[pi]; /* put pivot back */
 		arr[pi] = pivot;
 
-		quickSortTasks(arr, lo, pi - 1);
-		quickSortTasks(arr, pi + 1, hi);
+		quickSortTasks(arr, lo, pi - 1, compf);
+		quickSortTasks(arr, pi + 1, hi, compf);
 	}
 }
 
-Task chooseAndPlacePivot(Task arr[], int lo, int hi)
+Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 {
 	int pi;
 	Task tmp;
 	/* use median of three to choose pivot, place it at the end */
 	pi = (hi + lo) / 2;
-	if (strcmp(arr[pi].desc, arr[hi].desc) < 0) {
+	if (compf(arr[pi], arr[hi]) < 0) {
 		tmp = arr[hi];
 		arr[hi] = arr[pi];
 		arr[pi] = tmp;
 	}
-	if (strcmp(arr[hi].desc, arr[lo].desc) < 0) {
+	if (compf(arr[hi], arr[lo]) < 0) {
 		tmp = arr[hi];
 		arr[hi] = arr[lo];
 		arr[lo] = tmp;
 	}
-	if (strcmp(arr[pi].desc, arr[hi].desc) < 0) {
+	if (compf(arr[pi], arr[hi]) < 0) {
 		tmp = arr[hi];
 		arr[hi] = arr[pi];
 		arr[pi] = tmp;
@@ -47,7 +47,7 @@ Task chooseAndPlacePivot(Task arr[], int lo, int hi)
 	return arr[hi];
 }
 
-int partialSort(Task arr[], int lo, int hi, Task pivot)
+int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task))
 {
 	int i, left, right, first = 1;
 	Task tmp;
@@ -62,19 +62,33 @@ int partialSort(Task arr[], int lo, int hi, Task pivot)
 		left = hi;
 		right = lo;
 		for (i = lo; i <= hi - 1; i++) {
-			if (strcmp(arr[i].desc, pivot.desc) > 0) {
+			if (compf(arr[i], pivot) > 0) {
 				left = i;
 				break;
 			}
 		}
 		for (i = hi - 1; i >= lo; i--) {
-			if (strcmp(arr[i].desc, pivot.desc) < 0) {
+			if (compf(arr[i], pivot) < 0) {
 				right = i;
 				break;
 			}
 		}
 	} while (left < right);
 	return left;
+}
+
+int compareTasksByDesc(Task a, Task b)
+{
+	return strcmp(a.desc, b.desc);
+}
+
+int compareTasksByStartThenDesc(Task a, Task b)
+{
+	int r = (a.start - b.start);
+	if (r == 0) {
+		return compareTasksByDesc(a, b);
+	}
+	return r;
 }
 
 int isOkChar(char c)
@@ -95,11 +109,11 @@ void readInt(int *i)
 	scanf("%d", i);
 }
 
-void readWord(char w[])
+void readWord(char w[], int maxsize)
 {
 	int i = 0, inside = 0;
 	char c;
-	while (isOkChar(c = getchar())) {
+	while (i < maxsize - 2 && isOkChar(c = getchar())) {
 		if (!isspace(c)) {
 			w[i++] = c;
 			inside = 1;
@@ -124,45 +138,40 @@ void readString(char s[], int maxsize)
 	s[i] = '\0';
 }
 
-void getActivity(Activity *actv, Activity list[], int listSize, char *desc)
+Activity *getActivity(Activity list[], int listSize, char *desc)
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
 		if (strcmp(list[i].desc, desc) == 0) {
-			*actv = list[i];
-			break;
+			return &(list[i]);
 		}
 	}
+	return NULL;
 }
 
-void getTask(Task *task, Task list[], int listSize, unsigned int id) /* FIXME: dry */
+Task *getTask(Task list[], int listSize, unsigned int id) /* FIXME: dry */
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
 		if (list[i].id == id) {
-			*task = list[i];
-			break;
+			return &list[i];
 		}
 	}
+	return NULL;
 }
 
-void getUser(User *user, User list[], int listSize, char desc[])
+User *getUser(User list[], int listSize, char desc[])
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
-		if (list[i].desc == desc) {
-			*user = list[i];
-			break;
+		if (strcmp(list[i].desc, desc) == 0) {
+			return &list[i];
 		}
 	}
+	return NULL;
 }
 
 void printTask(Task task)
 {
 	printf("%u %s #%u %s\n", task.id, task.activity.desc, task.duration, task.desc);
-}
-
-int compareTaskDescs(void *a, void *b)
-{
-	return ((*(Task *)a).desc - (*(Task *)b).desc);
 }
