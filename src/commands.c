@@ -87,7 +87,32 @@ void step(State *state)
 
 void user(State *state)
 {
-	printf("User! %d\n", state->usersSize);
+	unsigned int i, len = 0;
+	char c, user[MAX_USER_SIZE];
+	while (isOkChar(c = getchar())) {
+		if (!isspace(c)) {
+			user[len++] = c;
+		}
+	}
+	user[len] = '\0';
+	if (strcmp(user, "") != 0) {
+		for (i = 0; i < state->usersSize; i++) {
+			if (strcmp(state->users[i].desc, user) == 0) {
+				printf(ERR_USER_ALREADY_EXISTS);
+				return;
+			}
+		}
+		if (state->usersSize + 1 >= MAX_USERS) {
+			printf(ERR_TOO_MANY_USERS);
+			return;
+		}
+
+		strcpy(state->users[state->usersSize++].desc, user);
+	} else {
+		for (i = 0; i < state->usersSize; i++) {
+			printf("%s\n", state->users[i].desc);
+		}
+	}
 }
 
 void move(State *state)

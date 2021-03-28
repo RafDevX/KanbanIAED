@@ -54,6 +54,8 @@
 #define ERR_DUPLICATE_DESC "duplicate description\n"
 #define ERR_NO_SUCH_TASK "no such task\n"
 #define ERR_INVALID_TIME "invalid time\n"
+#define ERR_USER_ALREADY_EXISTS "user already exists\n"
+#define ERR_TOO_MANY_USERS "too many users\n"
 
 /*** Default Activities ***/
 
