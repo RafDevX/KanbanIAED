@@ -9,7 +9,7 @@
 
 void task(State *state)
 {
-	int duration;
+	int duration = -1;
 	unsigned int i, size;
 	char desc[MAX_TASK_DESC_SIZE];
 	Task *new;
@@ -67,7 +67,7 @@ void list(State *state)
 		}
 	} while (isOkChar(c));
 	if (!hadArgs) {
-		quickSort(state->tasks, state->tasksSize, compareTaskDescs);
+		quickSortTasks(state->tasks, 0, state->tasksSize - 1);
 		for (i = 0; i < state->tasksSize; i++) {
 			printTask(state->tasks[i]);
 		}
@@ -76,7 +76,7 @@ void list(State *state)
 
 void step(State *state)
 {
-	int duracao;
+	int duracao = -1;
 	readInt(&duracao);
 	discardRemaining();
 	if (duracao < 0) {

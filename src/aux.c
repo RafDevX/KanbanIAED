@@ -7,14 +7,79 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
+void quickSortTasks(Task arr[], int lo, int hi)
+{
+	int pi;
+	Task pivot;
+	if (lo < hi) {
+		pivot = chooseAndPlacePivot(arr, lo, hi);
+		pi = partialSort(arr, lo, hi, pivot);
+
+		arr[hi] = arr[pi]; /* put pivot back */
+		arr[pi] = pivot;
+
+		quickSortTasks(arr, lo, pi - 1);
+		quickSortTasks(arr, pi + 1, hi);
+	}
+}
+
+Task chooseAndPlacePivot(Task arr[], int lo, int hi)
+{
+	int pi;
+	Task tmp;
+	/* use median of three to choose pivot, place it at the end */
+	pi = (hi + lo) / 2;
+	if (strcmp(arr[pi].desc, arr[hi].desc) < 0) {
+		tmp = arr[hi];
+		arr[hi] = arr[pi];
+		arr[pi] = tmp;
+	}
+	if (strcmp(arr[hi].desc, arr[lo].desc) < 0) {
+		tmp = arr[hi];
+		arr[hi] = arr[lo];
+		arr[lo] = tmp;
+	}
+	if (strcmp(arr[pi].desc, arr[hi].desc) < 0) {
+		tmp = arr[hi];
+		arr[hi] = arr[pi];
+		arr[pi] = tmp;
+	}
+	return arr[hi];
+}
+
+int partialSort(Task arr[], int lo, int hi, Task pivot)
+{
+	int i, left, right, first = 1;
+	Task tmp;
+	do {
+		if (!first) {
+			tmp = arr[left];
+			arr[left] = arr[right];
+			arr[right] = tmp;
+		}
+		first = 0;
+
+		left = hi;
+		right = lo;
+		for (i = lo; i <= hi - 1; i++) {
+			if (strcmp(arr[i].desc, pivot.desc) > 0) {
+				left = i;
+				break;
+			}
+		}
+		for (i = hi - 1; i >= lo; i--) {
+			if (strcmp(arr[i].desc, pivot.desc) < 0) {
+				right = i;
+				break;
+			}
+		}
+	} while (left < right);
+	return left;
+}
+
 int isOkChar(char c)
 {
 	return c != EOF && c != '\n'; /* Possibly add more restrictions with ctype.h funcs */
-}
-
-void quickSort(void *base, unsigned int size, int (*cmpfunc)(void *, void *))
-{
-	/* TODO: this */
 }
 
 void discardRemaining()

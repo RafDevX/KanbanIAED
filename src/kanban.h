@@ -98,8 +98,10 @@ typedef struct {
 
 /* Auxiliary */
 
+void quickSortTasks(Task arr[], int lo, int hi);
+Task chooseAndPlacePivot(Task arr[], int lo, int hi);
+int partialSort(Task arr[], int lo, int hi, Task pivot);
 int isOkChar(char c);
-void quickSort(void *base, unsigned int size, int (*cmpfunc)(void *, void *));
 void discardRemaining(void);
 void readInt(int *i);
 void readString(char s[], int maxsize);
