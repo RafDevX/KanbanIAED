@@ -80,6 +80,7 @@ void cmdStep(State *state)
 	discardRemaining();
 	if (duracao < 0) {
 		printf(ERR_INVALID_TIME);
+		return;
 	}
 	printf("%u\n", state->time += duracao);
 }
