@@ -41,7 +41,7 @@ void cmdTask(State *state)
 	new->id = size + 1;
 	new->start = 0;
 
-	printf("task %d\n", size + 1);
+	printf(OUT_ADD_TASK, size + 1);
 }
 
 void cmdList(State *state)
@@ -82,7 +82,7 @@ void cmdStep(State *state)
 		printf(ERR_INVALID_TIME);
 		return;
 	}
-	printf("%u\n", state->time += duracao);
+	printf(OUT_STEP, state->time += duracao);
 }
 
 void cmdUser(State *state)
@@ -105,7 +105,7 @@ void cmdUser(State *state)
 		strcpy(state->users[state->usersSize++].desc, username);
 	} else {
 		for (i = 0; i < state->usersSize; i++) {
-			printf("%s\n", state->users[i].desc);
+			printf(OUT_LIST_USER, state->users[i].desc);
 		}
 	}
 }
@@ -151,7 +151,7 @@ void cmdMove(State *state)
 				elapsed = state->time - task->start;
 			}
 			slack = elapsed - task->duration;
-			printf("duration=%d slack=%d\n", elapsed, slack);
+			printf(OUT_MOVE_TASK_TO_DONE, elapsed, slack);
 		} else if (task->start == 0) {
 			task->start = state->time;
 		}
@@ -182,7 +182,7 @@ void cmdTina(State *state)
 	quickSortTasks(tasks, 0, size - 1, compareTasksByStartThenDesc);
 
 	for (i = 0; i < size; i++) {
-		printf("%u %u %s\n", tasks[i].id, tasks[i].start, tasks[i].desc);
+		printf(OUT_LIST_TINA, tasks[i].id, tasks[i].start, tasks[i].desc);
 	}
 }
 
@@ -212,7 +212,7 @@ void cmdActv(State *state)
 		strcpy(state->activities[state->activitiesSize++].desc, activity);
 	} else {
 		for (i = 0; i < state->activitiesSize; i++) {
-			printf("%s\n", state->activities[i].desc);
+			printf(OUT_LIST_ACTIVITY, state->activities[i].desc);
 		}
 	}
 }

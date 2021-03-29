@@ -173,5 +173,5 @@ User *getUser(User list[], int listSize, char desc[])
 
 void printTask(Task task)
 {
-	printf("%u %s #%u %s\n", task.id, task.activity.desc, task.duration, task.desc);
+	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration, task.desc);
 }

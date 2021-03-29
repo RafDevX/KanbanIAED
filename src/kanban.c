@@ -47,9 +47,9 @@ int main()
 		case ACTV_CMD: /* Activity */
 			cmdActv(&state);
 			break;
-		default: /* Unrecognized command */
-			return -1;
+		default: /* Unknown command */
+			return RETCODE_UNKNOWN_CMD;
 		}
 	}
-	return 0;
+	return RETCODE_OK;
 }

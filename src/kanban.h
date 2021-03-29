@@ -64,11 +64,24 @@
 #define ERR_INVALID_DESCRIPTION "invalid description\n"
 #define ERR_TOO_MANY_ACTIVITIES "too many activities\n"
 
+#define OUT_ADD_TASK "task %d\n"
+#define OUT_LIST_TASK "%u %s #%u %s\n"
+#define OUT_STEP "%u\n"
+#define OUT_LIST_USER "%s\n"
+#define OUT_MOVE_TASK_TO_DONE "duration=%d slack=%d\n"
+#define OUT_LIST_TINA "%u %u %s\n"
+#define OUT_LIST_ACTIVITY "%s\n"
+
 /*** Default Activities ***/
 
 #define DEFAULT_ACTV_TODO "TO DO"
 #define DEFAULT_ACTV_IPRG "IN PROGRESS"
 #define DEFAULT_ACTV_DONE "DONE"
+
+/*** Return Codes ***/
+
+#define RETCODE_OK 0
+#define RETCODE_UNKNOWN_CMD -1
 
 /************************
  ***** Custom Types *****
@@ -107,7 +120,6 @@ typedef struct {
 
 /* Auxiliary */
 
-/* TODO: try refactor so returns pointers instead of through arg */
 void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task));
 Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task));
 int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task));
