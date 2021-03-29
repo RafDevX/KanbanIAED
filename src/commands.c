@@ -143,6 +143,8 @@ void cmdMove(State *state)
 		return;
 	}
 
+	task->user = *user;
+
 	if (strcmp(task->activity.desc, actv->desc) != 0) {
 		if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
 			if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) != 0) {

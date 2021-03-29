@@ -113,7 +113,7 @@ void readWord(char w[], int maxsize)
 {
 	int i = 0, inside = 0;
 	char c;
-	while (i < maxsize - 2 && isOkChar(c = getchar())) {
+	while (i < maxsize && isOkChar(c = getchar())) {
 		if (!isspace(c)) {
 			w[i++] = c;
 			inside = 1;
@@ -129,7 +129,7 @@ void readPhrase(char s[], int maxsize)
 {
 	int i = 0, stripping = 1;
 	char c;
-	while (i < maxsize - 2 && isOkChar(c = getchar())) {
+	while (i < maxsize && isOkChar(c = getchar())) {
 		if (!isspace(c) || !stripping) {
 			stripping = 0;
 			s[i++] = c;
