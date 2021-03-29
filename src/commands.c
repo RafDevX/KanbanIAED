@@ -111,7 +111,7 @@ void cmdUser(State *state)
 
 void cmdMove(State *state)
 {
-	int id, spent, slack;
+	int id, elapsed = 0, slack;
 	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
 	Task *task;
 	User *user;
@@ -142,15 +142,17 @@ void cmdMove(State *state)
 		return;
 	}
 
-	task->activity = *actv;
-
 	if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
-		spent = state->time - task->start;
-		slack = spent - task->duration;
-		printf("duration=%d slack=%d\n", spent, slack);
+		if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) != 0) {
+			elapsed = state->time - task->start;
+		}
+		slack = elapsed - task->duration;
+		printf("duration=%d slack=%d\n", elapsed, slack);
 	} else if (task->start == 0) {
 		task->start = state->time;
 	}
+
+	task->activity = *actv;
 }
 
 void cmdTina(State *state)
