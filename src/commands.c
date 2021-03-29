@@ -142,17 +142,19 @@ void cmdMove(State *state)
 		return;
 	}
 
-	if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
-		if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) != 0) {
-			elapsed = state->time - task->start;
+	if (strcmp(task->activity.desc, actv->desc) != 0) {
+		if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
+			if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) != 0) {
+				elapsed = state->time - task->start;
+			}
+			slack = elapsed - task->duration;
+			printf("duration=%d slack=%d\n", elapsed, slack);
+		} else if (task->start == 0) {
+			task->start = state->time;
 		}
-		slack = elapsed - task->duration;
-		printf("duration=%d slack=%d\n", elapsed, slack);
-	} else if (task->start == 0) {
-		task->start = state->time;
-	}
 
-	task->activity = *actv;
+		task->activity = *actv;
+	}
 }
 
 void cmdTina(State *state)
