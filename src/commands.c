@@ -20,7 +20,7 @@ void cmdTask(State *state)
 	if (duration <= 0) {
 		printf(ERR_INVALID_DURATION);
 		return;
-	} else if (state->tasksSize + 1 >= MAX_TASKS) {
+	} else if (state->tasksSize + 1 > MAX_TASKS) {
 		printf(ERR_TOO_MANY_TASKS);
 		return;
 	}
@@ -97,7 +97,7 @@ void cmdUser(State *state)
 			printf(ERR_USER_ALREADY_EXISTS);
 			return;
 		}
-		if (state->usersSize + 1 >= MAX_USERS) {
+		if (state->usersSize + 1 > MAX_USERS) {
 			printf(ERR_TOO_MANY_USERS);
 			return;
 		}
@@ -202,7 +202,7 @@ void cmdActv(State *state)
 				return;
 			}
 		}
-		if (state->activitiesSize + 1 >= MAX_ACTIVITIES) {
+		if (state->activitiesSize + 1 > MAX_ACTIVITIES) {
 			printf(ERR_TOO_MANY_ACTIVITIES);
 			return;
 		}
