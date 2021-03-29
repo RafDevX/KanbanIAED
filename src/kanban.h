@@ -20,9 +20,9 @@
 
 /*** Type-related constants ***/
 
-#define MAX_ACTIVITY_SIZE 20
-#define MAX_USER_SIZE 20
-#define MAX_TASK_DESC_SIZE 50
+#define MAX_ACTIVITY_SIZE 21
+#define MAX_USER_SIZE 21
+#define MAX_TASK_DESC_SIZE 51
 
 #define MAX_TASKS 10000
 #define MAX_USERS 50
