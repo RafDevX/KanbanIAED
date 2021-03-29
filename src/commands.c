@@ -58,7 +58,7 @@ void cmdList(State *state)
 		} else if (n != 0) {
 			task = getTask(state->tasks, state->tasksSize, n);
 			if (task == NULL) {
-				printf(ERR_NO_SUCH_TASK);
+				printf(ERR_ID_NO_SUCH_TASK, n);
 				return;
 			}
 			printTask(*task);
