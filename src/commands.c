@@ -189,7 +189,7 @@ void cmdActv(State *state)
 	char activity[MAX_ACTIVITY_SIZE] = "";
 	unsigned int i = 0;
 	Activity *actv;
-	readWord(activity, MAX_ACTIVITY_SIZE);
+	readString(activity, MAX_ACTIVITY_SIZE);
 	if (activity[0] != '\0') {
 		actv = getActivity(state->activities, state->activitiesSize, activity);
 		if (actv != NULL) {
