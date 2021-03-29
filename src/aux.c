@@ -125,7 +125,7 @@ void readWord(char w[], int maxsize)
 }
 
 /* ....strips left */
-void readString(char s[], int maxsize)
+void readPhrase(char s[], int maxsize)
 {
 	int i = 0, stripping = 1;
 	char c;

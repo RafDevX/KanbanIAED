@@ -15,7 +15,7 @@ void cmdTask(State *state)
 	Task *new;
 	Activity *actv;
 	readInt(&duration);
-	readString(desc, MAX_TASK_DESC_SIZE);
+	readPhrase(desc, MAX_TASK_DESC_SIZE);
 
 	if (duration <= 0) {
 		printf(ERR_INVALID_DURATION);
@@ -119,7 +119,7 @@ void cmdMove(State *state)
 	Activity *actv;
 	readInt(&id);
 	readWord(username, MAX_USER_SIZE);
-	readString(activity, MAX_ACTIVITY_SIZE);
+	readPhrase(activity, MAX_ACTIVITY_SIZE);
 
 	task = getTask(state->tasks, state->tasksSize, id);
 	if (task == NULL) {
@@ -164,7 +164,7 @@ void cmdTina(State *state)
 	char activity[MAX_ACTIVITY_SIZE];
 	Activity *actv;
 	Task tasks[MAX_TASKS];
-	readString(activity, MAX_ACTIVITY_SIZE);
+	readPhrase(activity, MAX_ACTIVITY_SIZE);
 	actv = getActivity(state->activities, state->activitiesSize, activity);
 	if (actv == NULL) {
 		printf(ERR_NO_SUCH_ACTIVITY);
@@ -189,7 +189,7 @@ void cmdActv(State *state)
 	char activity[MAX_ACTIVITY_SIZE] = "";
 	unsigned int i = 0;
 	Activity *actv;
-	readString(activity, MAX_ACTIVITY_SIZE);
+	readPhrase(activity, MAX_ACTIVITY_SIZE);
 	if (activity[0] != '\0') {
 		actv = getActivity(state->activities, state->activitiesSize, activity);
 		if (actv != NULL) {

@@ -117,7 +117,7 @@ int isOkChar(char c);
 void discardRemaining(void);
 void readInt(int *i);
 void readWord(char w[], int maxsize);
-void readString(char s[], int maxsize);
+void readPhrase(char s[], int maxsize);
 Activity *getActivity(Activity list[], int listSize, char *desc);
 Task *getTask(Task list[], int listSize, unsigned int id);
 User *getUser(User list[], int listSize, char desc[]);
