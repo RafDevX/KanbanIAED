@@ -76,9 +76,8 @@ void cmdList(State *state)
 	} while (isOkChar(c));
 	if (!hadArgs) {
 		quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);
-		for (i = 0; i < state->tasksSize; i++) {
+		for (i = 0; i < state->tasksSize; i++)
 			printTask(state->tasks[i]);
-		}
 	}
 }
 
@@ -114,9 +113,8 @@ void cmdUser(State *state)
 
 		strcpy(state->users[state->usersSize++].desc, username);
 	} else {
-		for (i = 0; i < state->usersSize; i++) {
+		for (i = 0; i < state->usersSize; i++)
 			printf(OUT_LIST_USER, state->users[i].desc);
-		}
 	}
 }
 
@@ -179,16 +177,14 @@ void cmdTina(State *state)
 		return;
 	}
 
-	for (i = 0; i < state->tasksSize; i++) {
+	for (i = 0; i < state->tasksSize; i++)
 		if (strcmp(state->tasks[i].activity.desc, actv->desc) == 0)
 			tasks[size++] = state->tasks[i];
-	}
 
 	quickSortTasks(tasks, 0, size - 1, compareTasksByStartThenDesc);
 
-	for (i = 0; i < size; i++) {
+	for (i = 0; i < size; i++)
 		printf(OUT_LIST_TINA, tasks[i].id, tasks[i].start, tasks[i].desc);
-	}
 }
 
 /* Create a new activity or list existing */
@@ -217,8 +213,7 @@ void cmdActv(State *state)
 
 		strcpy(state->activities[state->activitiesSize++].desc, activity);
 	} else {
-		for (i = 0; i < state->activitiesSize; i++) {
+		for (i = 0; i < state->activitiesSize; i++)
 			printf(OUT_LIST_ACTIVITY, state->activities[i].desc);
-		}
 	}
 }

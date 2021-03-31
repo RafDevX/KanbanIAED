@@ -134,10 +134,9 @@ void readPhrase(char s[], int maxsize)
 Activity *getActivity(Activity list[], int listSize, char *desc)
 {
 	int i;
-	for (i = 0; i < listSize; i++) {
+	for (i = 0; i < listSize; i++)
 		if (strcmp(list[i].desc, desc) == 0)
 			return &(list[i]);
-	}
 	return NULL;
 }
 
@@ -145,10 +144,9 @@ Activity *getActivity(Activity list[], int listSize, char *desc)
 Task *getTask(Task list[], int listSize, unsigned int id)
 {
 	int i;
-	for (i = 0; i < listSize; i++) {
+	for (i = 0; i < listSize; i++)
 		if (list[i].id == id)
 			return &list[i];
-	}
 	return NULL;
 }
 
@@ -156,10 +154,9 @@ Task *getTask(Task list[], int listSize, unsigned int id)
 User *getUser(User list[], int listSize, char desc[])
 {
 	int i;
-	for (i = 0; i < listSize; i++) {
+	for (i = 0; i < listSize; i++)
 		if (strcmp(list[i].desc, desc) == 0)
 			return &list[i];
-	}
 	return NULL;
 }
 
