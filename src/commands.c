@@ -56,21 +56,19 @@ void cmdList(State *state)
 		c = getchar();
 		if (isdigit(c)) {
 			hadArgs = 1;
-			if (n == 0 && c == '0') {
+			if (n == 0 && c == '0')
 				iszero = 1;
-			} else {
+			else
 				n = n * 10 + (c - '0');
-			}
 		} else if (c == '-') {
 			negmod = -1;
 		} else if (n != 0 || iszero) {
 			n *= negmod;
 			task = getTask(state->tasks, state->tasksSize, n);
-			if (task == NULL) {
+			if (task == NULL)
 				printf(ERR_ID_NO_SUCH_TASK, n);
-			} else {
+			else
 				printTask(*task);
-			}
 			n = 0;
 			negmod = 1;
 			iszero = 0;
@@ -109,8 +107,7 @@ void cmdUser(State *state)
 		if (user != NULL) {
 			printf(ERR_USER_ALREADY_EXISTS);
 			return;
-		}
-		if (state->usersSize + 1 > MAX_USERS) {
+		} else if (state->usersSize + 1 > MAX_USERS) {
 			printf(ERR_TOO_MANY_USERS);
 			return;
 		}
@@ -136,23 +133,19 @@ void cmdMove(State *state)
 	readPhrase(activity, MAX_ACTIVITY_SIZE);
 
 	task = getTask(state->tasks, state->tasksSize, id);
+	user = getUser(state->users, state->usersSize, username);
+	actv = getActivity(state->activities, state->activitiesSize, activity);
+
 	if (task == NULL) {
 		printf(ERR_NO_SUCH_TASK);
 		return;
-	}
-	if (strcmp(activity, DEFAULT_ACTV_TODO) == 0) {
+	} else if (strcmp(activity, DEFAULT_ACTV_TODO) == 0) {
 		printf(ERR_TASK_ALREADY_STARTED);
 		return;
-	}
-
-	user = getUser(state->users, state->usersSize, username);
-	if (user == NULL) {
+	} else if (user == NULL) {
 		printf(ERR_NO_SUCH_USER);
 		return;
-	}
-
-	actv = getActivity(state->activities, state->activitiesSize, activity);
-	if (actv == NULL) {
+	} else if (actv == NULL) {
 		printf(ERR_NO_SUCH_ACTIVITY);
 		return;
 	}
@@ -162,9 +155,7 @@ void cmdMove(State *state)
 	if (strcmp(task->activity.desc, actv->desc) != 0) {
 		if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) == 0) {
 			task->start = state->time;
-		}
-
-		if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
+		} else if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
 			elapsed = state->time - task->start;
 			slack = elapsed - task->duration;
 			printf(OUT_MOVE_TASK_TO_DONE, elapsed, slack);
@@ -189,9 +180,8 @@ void cmdTina(State *state)
 	}
 
 	for (i = 0; i < state->tasksSize; i++) {
-		if (strcmp(state->tasks[i].activity.desc, actv->desc) == 0) {
+		if (strcmp(state->tasks[i].activity.desc, actv->desc) == 0)
 			tasks[size++] = state->tasks[i];
-		}
 	}
 
 	quickSortTasks(tasks, 0, size - 1, compareTasksByStartThenDesc);
