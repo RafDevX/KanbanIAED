@@ -47,22 +47,31 @@ void cmdTask(State *state)
 void cmdList(State *state)
 {
 	int hadArgs = 0;
-	unsigned int i, n = 0;
+	unsigned int i, n = 0, negmod = 1, iszero = 0;
 	Task *task;
 	char c;
 	do {
 		c = getchar();
 		if (isdigit(c)) {
 			hadArgs = 1;
-			n = n * 10 + (c - '0');
-		} else if (n != 0) {
+			if (n == 0 && c == '0') {
+				iszero = 1;
+			} else {
+				n = n * 10 + (c - '0');
+			}
+		} else if (c == '-') {
+			negmod = -1;
+		} else if (n != 0 || iszero) {
+			n *= negmod;
 			task = getTask(state->tasks, state->tasksSize, n);
 			if (task == NULL) {
 				printf(ERR_ID_NO_SUCH_TASK, n);
-				return;
+			} else {
+				printTask(*task);
 			}
-			printTask(*task);
 			n = 0;
+			negmod = 1;
+			iszero = 0;
 		}
 	} while (isOkChar(c));
 	if (!hadArgs) {
