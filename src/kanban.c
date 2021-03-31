@@ -34,7 +34,7 @@ int main()
 }
 
 /* Call the appropriate function for a command. Returns whether it succeeded. */
-int triage(State *state, char cmd) /* #lizard forgives long function TODO: remove this */
+int triage(State *state, char cmd) /* #.lizard forgives long function TODO: remove this */
 {
 	switch (cmd) {
 	case TASK_CMD:

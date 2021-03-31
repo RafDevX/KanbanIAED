@@ -17,10 +17,7 @@ void cmdTask(State *state)
 	readInt(&duration);
 	readPhrase(desc, MAX_TASK_DESC_SIZE);
 
-	if (duration <= 0) {
-		printf(ERR_INVALID_DURATION);
-		return;
-	} else if (state->tasksSize + 1 > MAX_TASKS) {
+	if (state->tasksSize + 1 > MAX_TASKS) {
 		printf(ERR_TOO_MANY_TASKS);
 		return;
 	}
@@ -30,6 +27,11 @@ void cmdTask(State *state)
 			printf(ERR_DUPLICATE_DESC);
 			return;
 		}
+	}
+
+	if (duration <= 0) {
+		printf(ERR_INVALID_DURATION);
+		return;
 	}
 
 	size = state->tasksSize++;
