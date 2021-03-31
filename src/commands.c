@@ -42,35 +42,20 @@ void cmdTask(State *state)
 /* List tasks with ID, or all if no ID provided */
 void cmdList(State *state)
 {
-	int hadArgs = 0;
-	unsigned int i, n = 0, negmod = 1, iszero = 0;
+	int i, id, hadArgs = 0;
 	Task *task;
-	char c;
-	do {
-		c = getchar();
-		if (isdigit(c)) {
-			hadArgs = 1;
-			if (n == 0 && c == '0')
-				iszero = 1;
-			else
-				n = n * 10 + (c - '0');
-		} else if (c == '-') {
-			negmod = -1;
-		} else if (n != 0 || iszero) {
-			n *= negmod;
-			task = getTask(state->tasks, state->tasksSize, n);
-			if (task == NULL)
-				printf(ERR_ID_NO_SUCH_TASK, n);
-			else
-				printTask(*task);
-			n = 0;
-			negmod = 1;
-			iszero = 0;
-		}
-	} while (isOkChar(c));
+
+	while (scanf("%d", &id)) {
+		hadArgs = 1;
+		task = id > 0 ? getTask(state->tasks, state->tasksSize, (unsigned int)id) : NULL;
+		if (task == NULL)
+			printf(ERR_ID_NO_SUCH_TASK, id);
+		else
+			printTask(*task);
+	}
 	if (!hadArgs) {
 		quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);
-		for (i = 0; i < state->tasksSize; i++)
+		for (i = 0; i < (int)state->tasksSize; i++)
 			printTask(state->tasks[i]);
 	}
 }
