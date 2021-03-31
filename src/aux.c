@@ -183,3 +183,14 @@ void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, uns
 	task->id = id;
 	task->start = 0;
 }
+
+int hasLowercaseLetters(char s[])
+{
+	int i = 0;
+	while (isOkChar(s[i])) {
+		if (islower(s[i++])) {
+			return 1;
+		}
+	}
+	return 0;
+}

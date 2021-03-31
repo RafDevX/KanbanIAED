@@ -53,6 +53,7 @@ void cmdList(State *state)
 		else
 			printTask(*task);
 	}
+
 	if (!hadArgs) {
 		quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);
 		for (i = 0; i < (int)state->tasksSize; i++)
@@ -64,6 +65,7 @@ void cmdList(State *state)
 void cmdStep(State *state)
 {
 	int duracao = -1;
+
 	readInt(&duracao);
 	discardRemaining();
 	if (duracao < 0) {
@@ -79,6 +81,7 @@ void cmdUser(State *state)
 	unsigned int i = 0;
 	char username[MAX_USER_SIZE];
 	User *user;
+
 	readWord(username, MAX_USER_SIZE);
 	if (username[0] != '\0') {
 		user = getUser(state->users, state->usersSize, username);
@@ -105,6 +108,7 @@ void cmdMove(State *state)
 	Task *task;
 	User *user;
 	Activity *actv;
+
 	readInt(&id);
 	readWord(username, MAX_USER_SIZE);
 	readPhrase(activity, MAX_ACTIVITY_SIZE);
@@ -173,20 +177,17 @@ void cmdActv(State *state)
 	char activity[MAX_ACTIVITY_SIZE] = "";
 	unsigned int i = 0;
 	Activity *actv;
+
 	readPhrase(activity, MAX_ACTIVITY_SIZE);
 	if (activity[0] != '\0') {
 		actv = getActivity(state->activities, state->activitiesSize, activity);
 		if (actv != NULL) {
 			printf(ERR_DUPLICATE_ACTIVITY);
 			return;
-		}
-		while (isOkChar(activity[i])) {
-			if (islower(activity[i++])) {
-				printf(ERR_INVALID_DESCRIPTION);
-				return;
-			}
-		}
-		if (state->activitiesSize + 1 > MAX_ACTIVITIES) {
+		} else if (hasLowercaseLetters(activity)) {
+			printf(ERR_INVALID_DESCRIPTION);
+			return;
+		} else if (state->activitiesSize + 1 > MAX_ACTIVITIES) {
 			printf(ERR_TOO_MANY_ACTIVITIES);
 			return;
 		}
