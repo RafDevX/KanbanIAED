@@ -31,15 +31,12 @@ Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 	int pi;
 
 	pi = (hi + lo) / 2;
-	if (compf(arr[pi], arr[hi]) < 0) {
+	if (compf(arr[pi], arr[hi]) < 0)
 		swapTasks(arr, hi, pi);
-	}
-	if (compf(arr[hi], arr[lo]) < 0) {
+	if (compf(arr[hi], arr[lo]) < 0)
 		swapTasks(arr, hi, lo);
-	}
-	if (compf(arr[pi], arr[hi]) < 0) {
+	if (compf(arr[pi], arr[hi]) < 0)
 		swapTasks(arr, hi, pi);
-	}
 	return arr[hi];
 }
 
@@ -47,15 +44,10 @@ Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task))
 {
 	int i, left, right, first = 1;
-	Task tmp;
 	do {
-		if (!first) {
-			tmp = arr[left];
-			arr[left] = arr[right];
-			arr[right] = tmp;
-		}
+		if (!first)
+			swapTasks(arr, left, right);
 		first = 0;
-
 		left = hi;
 		right = lo;
 		for (i = lo; i <= hi - 1; i++) {
@@ -84,10 +76,7 @@ int compareTasksByDesc(Task a, Task b)
 int compareTasksByStartThenDesc(Task a, Task b)
 {
 	int r = (a.start - b.start);
-	if (r == 0) {
-		return compareTasksByDesc(a, b);
-	}
-	return r;
+	return (r != 0) ? r : compareTasksByDesc(a, b);
 }
 
 /* Checks whether a character is acceptable as input within a command */
@@ -146,9 +135,8 @@ Activity *getActivity(Activity list[], int listSize, char *desc)
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
-		if (strcmp(list[i].desc, desc) == 0) {
+		if (strcmp(list[i].desc, desc) == 0)
 			return &(list[i]);
-		}
 	}
 	return NULL;
 }
@@ -158,9 +146,8 @@ Task *getTask(Task list[], int listSize, unsigned int id)
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
-		if (list[i].id == id) {
+		if (list[i].id == id)
 			return &list[i];
-		}
 	}
 	return NULL;
 }
@@ -170,9 +157,8 @@ User *getUser(User list[], int listSize, char desc[])
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
-		if (strcmp(list[i].desc, desc) == 0) {
+		if (strcmp(list[i].desc, desc) == 0)
 			return &list[i];
-		}
 	}
 	return NULL;
 }
@@ -183,6 +169,7 @@ void printTask(Task task)
 	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration, task.desc);
 }
 
+/* Swap items in an array of tasks, given two indices */
 void swapTasks(Task arr[], int i, int j)
 {
 	Task tmp;
