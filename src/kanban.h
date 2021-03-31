@@ -14,11 +14,11 @@
  ***** Project-Wide Constants *****
  **********************************/
 
-/*** General configuration constants ***/
+/*** General ConfigurationConstants ***/
 
 #define INITIAL_TIME 0
 
-/*** Type-related constants ***/
+/*** Type-Related Constants ***/
 
 #define MAX_ACTIVITY_SIZE 21
 #define MAX_USER_SIZE 21
@@ -28,7 +28,7 @@
 #define MAX_USERS 50
 #define MAX_ACTIVITIES 10
 
-/*** Available commands ***/
+/*** Keys for Available Commands ***/
 
 /* Exit the program */
 #define QUIT_CMD 'q'

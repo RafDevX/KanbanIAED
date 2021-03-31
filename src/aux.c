@@ -7,6 +7,7 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
+/* Sort tasks using the QuickSort algorithm (Hoare partition scheme) */
 void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 {
 	int pi;
@@ -23,11 +24,13 @@ void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 	}
 }
 
+/* Aux for quickSortTasks: choose a pivot using the median of three method and
+ * place it at the end, keeping the remaining two ordered */
 Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 {
 	int pi;
 	Task tmp;
-	/* use median of three to choose pivot, place it at the end */
+
 	pi = (hi + lo) / 2;
 	if (compf(arr[pi], arr[hi]) < 0) {
 		tmp = arr[hi];
@@ -47,6 +50,7 @@ Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 	return arr[hi];
 }
 
+/* Aux for quickSortTasks: partially sort and determine the correct position for the pivot */
 int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task))
 {
 	int i, left, right, first = 1;
@@ -77,11 +81,13 @@ int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task)
 	return left;
 }
 
+/* Compare function to sort tasks by character code order of their descriptions */
 int compareTasksByDesc(Task a, Task b)
 {
 	return strcmp(a.desc, b.desc);
 }
 
+/* Compare function to sort tasks by start time and then by description if start times match */
 int compareTasksByStartThenDesc(Task a, Task b)
 {
 	int r = (a.start - b.start);
@@ -91,11 +97,13 @@ int compareTasksByStartThenDesc(Task a, Task b)
 	return r;
 }
 
+/* Checks whether a character is acceptable as input within a command */
 int isOkChar(char c)
 {
 	return c != EOF && c != '\n' && c != '\0';
 }
 
+/* Discard input until a new command segment is reached */
 void discardRemaining()
 {
 	char c;
@@ -104,11 +112,13 @@ void discardRemaining()
 	};
 }
 
+/* Read an integer from standard input */
 void readInt(int *i)
 {
 	scanf("%d", i);
 }
 
+/* Read a string of characters delimited by whitespace characters; strips left */
 void readWord(char w[], int maxsize)
 {
 	int i = 0, inside = 0;
@@ -124,7 +134,7 @@ void readWord(char w[], int maxsize)
 	w[i] = '\0';
 }
 
-/* ....strips left */
+/* Read until the end of the line/input; strips left */
 void readPhrase(char s[], int maxsize)
 {
 	int i = 0, stripping = 1;
@@ -138,6 +148,7 @@ void readPhrase(char s[], int maxsize)
 	s[i] = '\0';
 }
 
+/* Fetch the activity with a given description from a list, or NULL if it's not found */
 Activity *getActivity(Activity list[], int listSize, char *desc)
 {
 	int i;
@@ -149,7 +160,8 @@ Activity *getActivity(Activity list[], int listSize, char *desc)
 	return NULL;
 }
 
-Task *getTask(Task list[], int listSize, unsigned int id) /* FIXME: dry */
+/* Fetch the task with a given ID from a list, or NULL if it's not found */
+Task *getTask(Task list[], int listSize, unsigned int id)
 {
 	int i;
 	for (i = 0; i < listSize; i++) {
@@ -160,6 +172,7 @@ Task *getTask(Task list[], int listSize, unsigned int id) /* FIXME: dry */
 	return NULL;
 }
 
+/* Fetch the user with a given description from a list, or NULL if it's not found */
 User *getUser(User list[], int listSize, char desc[])
 {
 	int i;
@@ -171,6 +184,7 @@ User *getUser(User list[], int listSize, char desc[])
 	return NULL;
 }
 
+/* Print a task in the correct format for the list command */
 void printTask(Task task)
 {
 	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration, task.desc);

@@ -7,6 +7,7 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
+/* Add a new task */
 void cmdTask(State *state)
 {
 	int duration = -1;
@@ -44,6 +45,7 @@ void cmdTask(State *state)
 	printf(OUT_ADD_TASK, size + 1);
 }
 
+/* List tasks with ID, or all if no ID provided */
 void cmdList(State *state)
 {
 	int hadArgs = 0;
@@ -82,6 +84,7 @@ void cmdList(State *state)
 	}
 }
 
+/* Increment time by specified amount */
 void cmdStep(State *state)
 {
 	int duracao = -1;
@@ -94,6 +97,7 @@ void cmdStep(State *state)
 	printf(OUT_STEP, state->time += duracao);
 }
 
+/* Create a user or list existing */
 void cmdUser(State *state)
 {
 	unsigned int i = 0;
@@ -119,6 +123,7 @@ void cmdUser(State *state)
 	}
 }
 
+/* Move a task from one activity to another */
 void cmdMove(State *state)
 {
 	int id, elapsed, slack;
@@ -169,6 +174,7 @@ void cmdMove(State *state)
 	}
 }
 
+/* List all [T]asks [IN] a specified [A]ctivity */
 void cmdTina(State *state)
 {
 	unsigned int i, size = 0;
@@ -195,6 +201,7 @@ void cmdTina(State *state)
 	}
 }
 
+/* Create a new activity or list existing */
 void cmdActv(State *state)
 {
 	char activity[MAX_ACTIVITY_SIZE] = "";

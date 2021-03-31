@@ -7,6 +7,7 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
+/* Master logic: starts up, reads a command key and calls the appropriate function */
 int main()
 {
 
@@ -24,7 +25,7 @@ int main()
 	state.tasksSize = 0;
 	state.time = INITIAL_TIME;
 
-	while ((cmd = getchar()) != QUIT_CMD) {
+	while ((cmd = getchar()) != QUIT_CMD && cmd != EOF) {
 		switch (cmd) {
 		case TASK_CMD:
 			cmdTask(&state);
