@@ -145,3 +145,7 @@ void cmdUser(State *state);
 void cmdMove(State *state);
 void cmdTina(State *state); /* Tasks IN Activity */
 void cmdActv(State *state); /* Activities */
+
+/* General */
+
+int triage(State *state, char cmd);
