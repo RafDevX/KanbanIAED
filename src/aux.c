@@ -29,23 +29,16 @@ void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 {
 	int pi;
-	Task tmp;
 
 	pi = (hi + lo) / 2;
 	if (compf(arr[pi], arr[hi]) < 0) {
-		tmp = arr[hi];
-		arr[hi] = arr[pi];
-		arr[pi] = tmp;
+		swapTasks(arr, hi, pi);
 	}
 	if (compf(arr[hi], arr[lo]) < 0) {
-		tmp = arr[hi];
-		arr[hi] = arr[lo];
-		arr[lo] = tmp;
+		swapTasks(arr, hi, lo);
 	}
 	if (compf(arr[pi], arr[hi]) < 0) {
-		tmp = arr[hi];
-		arr[hi] = arr[pi];
-		arr[pi] = tmp;
+		swapTasks(arr, hi, pi);
 	}
 	return arr[hi];
 }
@@ -188,4 +181,12 @@ User *getUser(User list[], int listSize, char desc[])
 void printTask(Task task)
 {
 	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration, task.desc);
+}
+
+void swapTasks(Task arr[], int i, int j)
+{
+	Task tmp;
+	tmp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = tmp;
 }

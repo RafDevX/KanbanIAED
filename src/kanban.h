@@ -134,6 +134,7 @@ Activity *getActivity(Activity list[], int listSize, char *desc);
 Task *getTask(Task list[], int listSize, unsigned int id);
 User *getUser(User list[], int listSize, char desc[]);
 void printTask(Task task);
+void swapTasks(Task arr[], int i, int j);
 
 /* Commands */
 
