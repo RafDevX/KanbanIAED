@@ -13,7 +13,6 @@ void cmdTask(State *state)
 	int duration = -1;
 	unsigned int i, size;
 	char desc[MAX_TASK_DESC_SIZE];
-	Task *new;
 	Activity *actv;
 	readInt(&duration);
 	readPhrase(desc, MAX_TASK_DESC_SIZE);
@@ -34,13 +33,8 @@ void cmdTask(State *state)
 	}
 
 	size = state->tasksSize++;
-	new = &state->tasks[size];
 	actv = getActivity(state->activities, state->activitiesSize, DEFAULT_ACTV_TODO);
-	new->activity = *actv;
-	strcpy(new->desc, desc);
-	new->duration = duration;
-	new->id = size + 1;
-	new->start = 0;
+	initTask(&state->tasks[size], size + 1, desc, actv, duration);
 
 	printf(OUT_ADD_TASK, size + 1);
 }
@@ -151,9 +145,10 @@ void cmdMove(State *state)
 	task->user = *user;
 
 	if (strcmp(task->activity.desc, actv->desc) != 0) {
-		if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) == 0) {
+		if (strcmp(task->activity.desc, DEFAULT_ACTV_TODO) == 0)
 			task->start = state->time;
-		} else if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
+
+		if (strcmp(actv->desc, DEFAULT_ACTV_DONE) == 0) {
 			elapsed = state->time - task->start;
 			slack = elapsed - task->duration;
 			printf(OUT_MOVE_TASK_TO_DONE, elapsed, slack);

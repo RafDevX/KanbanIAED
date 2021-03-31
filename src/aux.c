@@ -174,3 +174,12 @@ void swapTasks(Task arr[], int i, int j)
 	arr[i] = arr[j];
 	arr[j] = tmp;
 }
+
+void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, unsigned int duration)
+{
+	task->activity = *startActv;
+	strcpy(task->desc, desc);
+	task->duration = duration;
+	task->id = id;
+	task->start = 0;
+}
