@@ -1,7 +1,8 @@
 /*
  *	File: kanban.h
  *	Author: Rafael Serra e Oliveira (ist199311)
- *	Description: Header file for the whole project in the same place for easy configuration.
+ *	Description: Header file for the whole project, in the same place
+ *		for easy configuration. Includes constants and prototypes.
 */
 
 /*** Include standard libraries ***/

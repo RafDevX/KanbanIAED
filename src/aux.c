@@ -40,7 +40,8 @@ Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 	return arr[hi];
 }
 
-/* Aux for quickSortTasks: partially sort and determine the correct position for the pivot */
+/* Aux for quickSortTasks: partially sort and determine the correct position
+ * for the pivot */
 int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task))
 {
 	int i, left, right, first = 1;
@@ -66,13 +67,15 @@ int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task)
 	return left;
 }
 
-/* Compare function to sort tasks by character code order of their descriptions */
+/* Compare function to sort tasks by character code order of their descriptions
+ * Negative if a comes before b, Positive if b comes before a, 0 otherwise */
 int compareTasksByDesc(Task a, Task b)
 {
 	return strcmp(a.desc, b.desc);
 }
 
-/* Compare function to sort tasks by start time and then by description if start times match */
+/* Compare function to sort tasks by start time and then by description if
+ * start times match. Negative if a < b, positive if a > b, 0 if a == b */
 int compareTasksByStartThenDesc(Task a, Task b)
 {
 	int r = (a.start - b.start);
@@ -100,7 +103,7 @@ void readInt(int *i)
 	scanf("%d", i);
 }
 
-/* Read a string of characters delimited by whitespace characters; strips left */
+/* Read a string of chars delimited by whitespace characters; strips left */
 void readWord(char w[], int maxsize)
 {
 	int i = 0, inside = 0;
@@ -130,7 +133,8 @@ void readPhrase(char s[], int maxsize)
 	s[i] = '\0';
 }
 
-/* Fetch the activity with a given description from a list, or NULL if it's not found */
+/* Fetch the activity with a given description from a list,
+ * or NULL if it's not found */
 Activity *getActivity(Activity list[], int listSize, char *desc)
 {
 	int i;
@@ -140,7 +144,8 @@ Activity *getActivity(Activity list[], int listSize, char *desc)
 	return NULL;
 }
 
-/* Fetch the task with a given ID from a list, or NULL if it's not found */
+/* Fetch the task with a given ID from a list,
+ * or NULL if it's not found */
 Task *getTask(Task list[], int listSize, unsigned int id)
 {
 	int i;
@@ -150,7 +155,8 @@ Task *getTask(Task list[], int listSize, unsigned int id)
 	return NULL;
 }
 
-/* Fetch the user with a given description from a list, or NULL if it's not found */
+/* Fetch the user with a given description from a list,
+ * or NULL if it's not found */
 User *getUser(User list[], int listSize, char desc[])
 {
 	int i;
@@ -175,6 +181,7 @@ void swapTasks(Task arr[], int i, int j)
 	arr[j] = tmp;
 }
 
+/* Initialize task values */
 void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, unsigned int duration)
 {
 	task->activity = *startActv;
@@ -184,6 +191,7 @@ void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, uns
 	task->start = 0;
 }
 
+/* Returns whether a string has any lowercase letters */
 int hasLowercaseLetters(char s[])
 {
 	int i = 0;
