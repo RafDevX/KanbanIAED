@@ -139,6 +139,7 @@ void printTask(Task task);
 void swapTasks(Task arr[], int i, int j);
 void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, unsigned int duration);
 int hasLowercaseLetters(char s[]);
+int readAndSanitizeMoveArguments(State *state, Task **task, User **user, Activity **activity);
 
 /* Commands */
 

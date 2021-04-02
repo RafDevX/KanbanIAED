@@ -103,31 +103,12 @@ void cmdUser(State *state)
 /* Move a task from one activity to another */
 void cmdMove(State *state)
 {
-	int id, elapsed, slack;
-	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
-	Task *task;
-	User *user;
-	Activity *actv;
+	int elapsed, slack;
+	Task *task = NULL;
+	User *user = NULL;
+	Activity *actv = NULL;
 
-	readInt(&id);
-	readWord(username, MAX_USER_SIZE);
-	readPhrase(activity, MAX_ACTIVITY_SIZE);
-
-	task = getTaskById(state->tasks, state->tasksSize, id);
-	user = getUser(state->users, state->usersSize, username);
-	actv = getActivity(state->activities, state->activitiesSize, activity);
-
-	if (task == NULL) {
-		printf(ERR_NO_SUCH_TASK);
-		return;
-	} else if (strcmp(activity, DEFAULT_ACTV_TODO) == 0) {
-		printf(ERR_TASK_ALREADY_STARTED);
-		return;
-	} else if (user == NULL) {
-		printf(ERR_NO_SUCH_USER);
-		return;
-	} else if (actv == NULL) {
-		printf(ERR_NO_SUCH_ACTIVITY);
+	if (!readAndSanitizeMoveArguments(state, &task, &user, &actv)) {
 		return;
 	}
 

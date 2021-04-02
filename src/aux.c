@@ -215,3 +215,35 @@ int hasLowercaseLetters(char s[])
 	}
 	return 0;
 }
+
+/* Read from input arguments to the move command, printing errors if necessary,
+ * and fetching the specified task, user, and activity. Returns whether it was
+ * sucessful */
+int readAndSanitizeMoveArguments(State *state, Task **task, User **user, Activity **actv)
+{
+	int id;
+	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
+	readInt(&id);
+	readWord(username, MAX_USER_SIZE);
+	readPhrase(activity, MAX_ACTIVITY_SIZE);
+
+	*task = getTaskById(state->tasks, state->tasksSize, id);
+	*user = getUser(state->users, state->usersSize, username);
+	*actv = getActivity(state->activities, state->activitiesSize, activity);
+
+	if (*task == NULL) {
+		printf(ERR_NO_SUCH_TASK);
+		return 0;
+	} else if (strcmp(activity, DEFAULT_ACTV_TODO) == 0) {
+		printf(ERR_TASK_ALREADY_STARTED);
+		return 0;
+	} else if (*user == NULL) {
+		printf(ERR_NO_SUCH_USER);
+		return 0;
+	} else if (*actv == NULL) {
+		printf(ERR_NO_SUCH_ACTIVITY);
+		return 0;
+	}
+
+	return 1;
+}
