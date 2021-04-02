@@ -146,12 +146,25 @@ Activity *getActivity(Activity list[], int listSize, char *desc)
 
 /* Fetch the task with a given ID from a list,
  * or NULL if it's not found */
-Task *getTask(Task list[], int listSize, unsigned int id)
+Task *getTaskById(Task list[], int listSize, unsigned int id)
 {
 	int i;
 	for (i = 0; i < listSize; i++)
 		if (list[i].id == id)
 			return &list[i];
+	return NULL;
+}
+
+/* Fetch the task with a given description from a list,
+ * or NULL if it's not found */
+Task *getTaskByDesc(Task list[], int listSize, char desc[])
+{
+	int i;
+	for (i = 0; i < listSize; i++) {
+		if (strcmp(list[i].desc, desc) == 0) {
+			return &list[i];
+		}
+	}
 	return NULL;
 }
 

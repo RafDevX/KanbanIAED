@@ -11,7 +11,7 @@
 void cmdTask(State *state)
 {
 	int duration = -1;
-	unsigned int i, size;
+	unsigned int size;
 	char desc[MAX_TASK_DESC_SIZE];
 	Activity *actv;
 	readInt(&duration);
@@ -22,11 +22,9 @@ void cmdTask(State *state)
 		return;
 	}
 
-	for (i = 0; i < state->tasksSize; i++) {
-		if (strcmp(state->tasks[i].desc, desc) == 0) {
-			printf(ERR_DUPLICATE_DESC);
-			return;
-		}
+	if (getTaskByDesc(state->tasks, state->tasksSize, desc) != NULL) {
+		printf(ERR_DUPLICATE_DESC);
+		return;
 	}
 
 	if (duration <= 0) {
@@ -49,7 +47,7 @@ void cmdList(State *state)
 
 	while (scanf("%d", &id)) {
 		hadArgs = 1;
-		task = id > 0 ? getTask(state->tasks, state->tasksSize, (unsigned int)id) : NULL;
+		task = id > 0 ? getTaskById(state->tasks, state->tasksSize, (unsigned int)id) : NULL;
 		if (task == NULL)
 			printf(ERR_ID_NO_SUCH_TASK, id);
 		else
@@ -115,7 +113,7 @@ void cmdMove(State *state)
 	readWord(username, MAX_USER_SIZE);
 	readPhrase(activity, MAX_ACTIVITY_SIZE);
 
-	task = getTask(state->tasks, state->tasksSize, id);
+	task = getTaskById(state->tasks, state->tasksSize, id);
 	user = getUser(state->users, state->usersSize, username);
 	actv = getActivity(state->activities, state->activitiesSize, activity);
 
