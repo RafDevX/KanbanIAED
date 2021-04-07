@@ -235,7 +235,8 @@ int readAndSanitizeMoveArguments(State *state, Task **task, User **user, Activit
 		printf(ERR_NO_SUCH_TASK);
 		return 0;
 	} else if (strcmp(activity, DEFAULT_ACTV_TODO) == 0) {
-		printf(ERR_TASK_ALREADY_STARTED);
+		if (strcmp((*task)->activity.desc, DEFAULT_ACTV_TODO) != 0)
+			printf(ERR_TASK_ALREADY_STARTED);
 		return 0;
 	} else if (*user == NULL) {
 		printf(ERR_NO_SUCH_USER);
