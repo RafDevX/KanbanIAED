@@ -123,7 +123,7 @@ void readWord(char w[], int maxsize)
 void readPhrase(char s[], int maxsize)
 {
 	int i = 0, stripping = 1;
-	char c;
+	int c;
 	while (i < maxsize && isOkChar(c = getchar())) {
 		if (!isspace(c) || !stripping) {
 			stripping = 0;
@@ -131,6 +131,8 @@ void readPhrase(char s[], int maxsize)
 		}
 	}
 	s[i] = '\0';
+	if (isOkChar(c))		/* if input was too long, a non-ASCII char took */
+		discardRemaining(); /* up too much space; what didn't fit is ignored */
 }
 
 /* Fetch the activity with a given description from a list,
