@@ -11,7 +11,7 @@
 void cmdTask(State *state)
 {
 	int duration = -1;
-	unsigned int size;
+	unsigned int newIndex;
 	char desc[MAX_TASK_DESC_SIZE];
 	Activity *actv;
 	readInt(&duration);
@@ -32,20 +32,22 @@ void cmdTask(State *state)
 		return;
 	}
 
-	size = state->tasksSize++;
 	actv = getActivity(state->activities, state->activitiesSize, DEFAULT_ACTV_TODO);
-	initTask(&state->tasks[size], size + 1, desc, actv, duration);
+	newIndex = makeRoomForNewTask(state->tasks, state->tasksSize++, desc);
+	initTask(&state->tasks[newIndex], state->tasksSize, desc, actv, duration);
 
-	printf(OUT_ADD_TASK, size + 1);
+	printf(OUT_ADD_TASK, state->tasksSize);
 }
 
 /* List tasks with ID, or all if no ID provided */
 void cmdList(State *state)
 {
 	int i, id, hadArgs = 0;
+	char sep;
 	Task *task;
 
-	while (scanf("%d", &id)) {
+	sep = getchar();
+	while (isOkChar(sep) && scanf("%d%c", &id, &sep)) {
 		hadArgs = 1;
 		task = id > 0 ? getTaskById(state->tasks, state->tasksSize, (unsigned int)id) : NULL;
 		if (task == NULL)
@@ -55,7 +57,7 @@ void cmdList(State *state)
 	}
 
 	if (!hadArgs) {
-		quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);
+		/*quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);*/
 		for (i = 0; i < (int)state->tasksSize; i++)
 			printTask(state->tasks[i]);
 	}

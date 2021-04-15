@@ -7,6 +7,22 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
+/* Since we're storing tasks alphabetically-sorted from the get go, move 
+ * "larger" tasks to the right to make room and return new task's index */
+unsigned int makeRoomForNewTask(Task arr[], unsigned int size, char desc[])
+{
+	int i;
+
+	for (i = size - 1; i >= 0; i--) {
+		if (strcmp(desc, arr[i].desc) < 0) {
+			arr[i + 1] = arr[i];
+		} else {
+			return i + 1;
+		}
+	}
+	return 0;
+}
+
 /* Sort tasks using the QuickSort algorithm (Hoare partition scheme) */
 void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task))
 {

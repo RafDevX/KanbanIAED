@@ -121,6 +121,7 @@ typedef struct {
 
 /* Auxiliary */
 
+unsigned int makeRoomForNewTask(Task arr[], unsigned int size, char desc[]);
 void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task));
 Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task));
 int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task));
