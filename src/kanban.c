@@ -7,7 +7,7 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
-/* Master logic: starts up, reads a command key and sends it to triage */
+/* Master logic: start up, read a command key and send it to triage */
 int main()
 {
 
@@ -32,7 +32,7 @@ int main()
 	return RETCODE_OK;
 }
 
-/* Call the appropriate function for a command. Returns whether it succeeded. */
+/* Call the appropriate function for a command. Return whether it succeeded. */
 int triage(State *state, char cmd)
 {
 	switch (cmd) {

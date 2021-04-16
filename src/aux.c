@@ -52,7 +52,7 @@ unsigned int makeRoomForNewTask(Task arr[], unsigned int size, char desc[])
 	return 0;
 }
 
-/* Checks whether a character is acceptable as input within a command */
+/* Check whether a character is acceptable as input within a command */
 int isOkChar(char c)
 {
 	return c != EOF && c != '\n' && c != '\0';
@@ -175,7 +175,7 @@ void initTask(Task *task, unsigned int id, char desc[], Activity *startActv,
 	task->start = 0;
 }
 
-/* Returns whether a string has any lowercase letters */
+/* Return whether a string has any lowercase letters */
 int hasLowercaseLetters(char s[])
 {
 	int i = 0;
@@ -187,7 +187,7 @@ int hasLowercaseLetters(char s[])
 }
 
 /* Read from input arguments to the move command, printing errors if necessary,
- * and fetching the specified task, user, and activity. Returns whether it was
+ * and fetching the specified task, user, and activity. Return whether it was
  * sucessful */
 int readAndSanitizeMoveArguments(State *state, Task **task, User **user,
 								 Activity **actv)
