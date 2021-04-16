@@ -56,10 +56,9 @@ void cmdList(State *state)
 			printTask(*task);
 	}
 
-	if (!hadArgs) {
+	if (!hadArgs)
 		for (i = 0; i < (int)state->tasksSize; i++)
 			printTask(state->tasks[i]);
-	}
 }
 
 /* Increment time by specified amount */
@@ -109,9 +108,8 @@ void cmdMove(State *state)
 	User *user = NULL;
 	Activity *actv = NULL;
 
-	if (!readAndSanitizeMoveArguments(state, &task, &user, &actv)) {
+	if (!readAndSanitizeMoveArguments(state, &task, &user, &actv))
 		return;
-	}
 
 	task->user = *user;
 

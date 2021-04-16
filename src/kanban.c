@@ -25,11 +25,10 @@ int main()
 	state.tasksSize = 0;
 	state.time = INITIAL_TIME;
 
-	while ((cmd = getchar()) != QUIT_CMD && cmd != EOF) {
-		if (!triage(&state, cmd)) {
+	while ((cmd = getchar()) != QUIT_CMD && cmd != EOF)
+		if (!triage(&state, cmd))
 			return RETCODE_UNKNOWN_CMD;
-		}
-	}
+
 	return RETCODE_OK;
 }
 
