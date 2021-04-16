@@ -82,7 +82,7 @@
 /*** Return Codes ***/
 
 #define RETCODE_OK 0
-#define RETCODE_UNKNOWN_CMD -1
+#define RETCODE_UNKNOWN_CMD 1
 
 /************************
  ***** Custom Types *****
