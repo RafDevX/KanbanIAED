@@ -136,7 +136,6 @@ Task *getTaskById(Task list[], int listSize, unsigned int id);
 Task *getTaskByDesc(Task list[], int listSize, char desc[]);
 User *getUser(User list[], int listSize, char desc[]);
 void printTask(Task task);
-void swapTasks(Task arr[], int i, int j);
 void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, unsigned int duration);
 int hasLowercaseLetters(char s[]);
 int readAndSanitizeMoveArguments(State *state, Task **task, User **user, Activity **activity);

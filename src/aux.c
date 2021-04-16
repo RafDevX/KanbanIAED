@@ -131,11 +131,17 @@ Task *getTaskById(Task list[], int listSize, unsigned int id)
  * or NULL if it's not found */
 Task *getTaskByDesc(Task list[], int listSize, char desc[])
 {
-	int i;
-	for (i = 0; i < listSize; i++) {
-		if (strcmp(list[i].desc, desc) == 0) {
-			return &list[i];
-		}
+	int med, cmp, left = 0, right = listSize - 1;
+
+	while (left <= right) {
+		med = (left + right) / 2;
+		cmp = strcmp(list[med].desc, desc);
+		if (cmp == 0)
+			return &list[med];
+		else if (cmp < 0)
+			left = med + 1;
+		else
+			right = med - 1;
 	}
 	return NULL;
 }
@@ -155,15 +161,6 @@ User *getUser(User list[], int listSize, char desc[])
 void printTask(Task task)
 {
 	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration, task.desc);
-}
-
-/* Swap items in an array of tasks, given two indices */
-void swapTasks(Task arr[], int i, int j)
-{
-	Task tmp;
-	tmp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = tmp;
 }
 
 /* Initialize task values */
