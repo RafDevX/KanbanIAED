@@ -57,7 +57,6 @@ void cmdList(State *state)
 	}
 
 	if (!hadArgs) {
-		/*quickSortTasks(state->tasks, 0, state->tasksSize - 1, compareTasksByDesc);*/
 		for (i = 0; i < (int)state->tasksSize; i++)
 			printTask(state->tasks[i]);
 	}
@@ -148,7 +147,7 @@ void cmdTina(State *state)
 		if (strcmp(state->tasks[i].activity.desc, actv->desc) == 0)
 			tasks[size++] = state->tasks[i];
 
-	quickSortTasks(tasks, 0, size - 1, compareTasksByStartThenDesc);
+	mergeSortTasksByStart(tasks, 0, size - 1);
 
 	for (i = 0; i < size; i++)
 		printf(OUT_LIST_TINA, tasks[i].id, tasks[i].start, tasks[i].desc);

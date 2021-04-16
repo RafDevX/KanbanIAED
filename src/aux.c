@@ -7,95 +7,49 @@
 /*** Include project header file ***/
 #include "kanban.h"
 
+/* Use MergeSort algorithm to sort tasks by start time */
+void mergeSortTasksByStart(Task arr[], int left, int right)
+{
+	int m = (right + left) / 2;
+	if (right <= left)
+		return;
+
+	mergeSortTasksByStart(arr, left, m);
+	mergeSortTasksByStart(arr, m + 1, right);
+	mergeTasksSubArrays(arr, left, m, right);
+}
+
+/* Merge two subarrays represented as independent sections in a single array
+ * using start time for comparison. Aux function for mergeSortTasksByStart */
+void mergeTasksSubArrays(Task arr[], int left, int m, int right)
+{
+	Task aux[MAX_TASKS];
+	int i, j, k;
+
+	for (i = m + 1; i > left; i--)
+		aux[i - 1] = arr[i - 1];
+	for (j = m; j < right; j++)
+		aux[right + m - j] = arr[j + 1];
+	for (k = left; k <= right; k++)
+		if (aux[j].start < aux[i].start || i == m + 1)
+			arr[k] = aux[j--];
+		else
+			arr[k] = aux[i++];
+}
+
 /* Since we're storing tasks alphabetically-sorted from the get go, move 
  * "larger" tasks to the right to make room and return new task's index */
 unsigned int makeRoomForNewTask(Task arr[], unsigned int size, char desc[])
 {
 	int i;
 
-	for (i = size - 1; i >= 0; i--) {
-		if (strcmp(desc, arr[i].desc) < 0) {
+	for (i = size - 1; i >= 0; i--)
+		if (strcmp(desc, arr[i].desc) < 0)
 			arr[i + 1] = arr[i];
-		} else {
+		else
 			return i + 1;
-		}
-	}
+
 	return 0;
-}
-
-/* Sort tasks using the QuickSort algorithm (Hoare partition scheme) */
-void quickSortTasks(Task arr[], int lo, int hi, int (*compf)(Task, Task))
-{
-	int pi;
-	Task pivot;
-	if (lo < hi) {
-		pivot = chooseAndPlacePivot(arr, lo, hi, compf);
-		pi = partialSort(arr, lo, hi, pivot, compf);
-
-		arr[hi] = arr[pi]; /* put pivot back */
-		arr[pi] = pivot;
-
-		quickSortTasks(arr, lo, pi - 1, compf);
-		quickSortTasks(arr, pi + 1, hi, compf);
-	}
-}
-
-/* Aux for quickSortTasks: choose a pivot using the median of three method and
- * place it at the end, keeping the remaining two ordered */
-Task chooseAndPlacePivot(Task arr[], int lo, int hi, int (*compf)(Task, Task))
-{
-	int pi;
-
-	pi = (hi + lo) / 2;
-	if (compf(arr[pi], arr[hi]) < 0)
-		swapTasks(arr, hi, pi);
-	if (compf(arr[hi], arr[lo]) < 0)
-		swapTasks(arr, hi, lo);
-	if (compf(arr[pi], arr[hi]) < 0)
-		swapTasks(arr, hi, pi);
-	return arr[hi];
-}
-
-/* Aux for quickSortTasks: partially sort and determine the correct position
- * for the pivot */
-int partialSort(Task arr[], int lo, int hi, Task pivot, int (*compf)(Task, Task))
-{
-	int i, left, right, first = 1;
-	do {
-		if (!first)
-			swapTasks(arr, left, right);
-		first = 0;
-		left = hi;
-		right = lo;
-		for (i = lo; i <= hi - 1; i++) {
-			if (compf(arr[i], pivot) > 0) {
-				left = i;
-				break;
-			}
-		}
-		for (i = hi - 1; i >= lo; i--) {
-			if (compf(arr[i], pivot) < 0) {
-				right = i;
-				break;
-			}
-		}
-	} while (left < right);
-	return left;
-}
-
-/* Compare function to sort tasks by character code order of their descriptions
- * Negative if a comes before b, Positive if b comes before a, 0 otherwise */
-int compareTasksByDesc(Task a, Task b)
-{
-	return strcmp(a.desc, b.desc);
-}
-
-/* Compare function to sort tasks by start time and then by description if
- * start times match. Negative if a < b, positive if a > b, 0 if a == b */
-int compareTasksByStartThenDesc(Task a, Task b)
-{
-	int r = (a.start - b.start);
-	return (r != 0) ? r : compareTasksByDesc(a, b);
 }
 
 /* Checks whether a character is acceptable as input within a command */
