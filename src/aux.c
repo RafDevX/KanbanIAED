@@ -160,11 +160,13 @@ User *getUser(User list[], int listSize, char desc[])
 /* Print a task in the correct format for the list command */
 void printTask(Task task)
 {
-	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration, task.desc);
+	printf(OUT_LIST_TASK, task.id, task.activity.desc, task.duration,
+		   task.desc);
 }
 
 /* Initialize task values */
-void initTask(Task *task, unsigned int id, char desc[], Activity *startActv, unsigned int duration)
+void initTask(Task *task, unsigned int id, char desc[], Activity *startActv,
+			  unsigned int duration)
 {
 	task->activity = *startActv;
 	strcpy(task->desc, desc);
@@ -188,7 +190,8 @@ int hasLowercaseLetters(char s[])
 /* Read from input arguments to the move command, printing errors if necessary,
  * and fetching the specified task, user, and activity. Returns whether it was
  * sucessful */
-int readAndSanitizeMoveArguments(State *state, Task **task, User **user, Activity **actv)
+int readAndSanitizeMoveArguments(State *state, Task **task, User **user,
+								 Activity **actv)
 {
 	int id;
 	char username[MAX_USER_SIZE], activity[MAX_ACTIVITY_SIZE];
