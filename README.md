@@ -2,6 +2,8 @@
 
 Desenvolver em C um sistema de gestão de tarefas tipo _kanban_.
 
+### NOTA FINAL: 20.0
+
 ## Links Úteis
 
 -   Repo Enunciado & Afins: https://github.com/pedroreissantos/iaed21/tree/main/p1
